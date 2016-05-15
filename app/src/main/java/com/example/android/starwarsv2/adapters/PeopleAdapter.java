@@ -1,10 +1,11 @@
-package com.example.android.starwarsv2;
+package com.example.android.starwarsv2.adapters;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.example.android.starwarsv2.ItemView;
 import com.swapi.models.People;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class PeopleAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ItemView itemView = null;
+        ItemView itemView;
 
         if(convertView == null){
             itemView = new ItemView(this.m_context, this.m_peopleList.get(position));

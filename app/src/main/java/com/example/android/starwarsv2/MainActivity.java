@@ -21,21 +21,21 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-/** People, Planets, Films, Spaceships, Vehicles, and Species **/
+/** People, Planets, Films, Starships, Vehicles, and Species **/
 
 public class MainActivity extends AppCompatActivity {
 
     protected static final String PEOPLE = "People";
     protected static final String PLANETS = "Planets";
     protected static final String FILMS = "Films";
-    protected static final String SPACESHIPS = "Spaceships";
+    protected static final String STARSHIPS = "Starships";
     protected static final String VEHICLES = "Vehicles";
     protected static final String SPECIES = "Species";
 
     protected Button peopleButton;
     protected Button planetsButton;
     protected Button filmsButton;
-    protected Button spaceshipsButton;
+    protected Button starshipsButton;
     protected Button vehiclesButton;
     protected Button speciesButton;
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         peopleButton = (Button) findViewById(R.id.getPeopleButton);
         planetsButton = (Button) findViewById(R.id.getPlanetsButton);
         filmsButton = (Button) findViewById(R.id.getFilmsButton);
-        spaceshipsButton = (Button) findViewById(R.id.getSpaceshipsButton);
+        starshipsButton = (Button) findViewById(R.id.getStarshipsButton);
         vehiclesButton = (Button) findViewById(R.id.getVehiclesButton);
         speciesButton = (Button) findViewById(R.id.getSpeciesButton);
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         peopleButton.setTypeface(myCustomFont);
         planetsButton.setTypeface(myCustomFont);
         filmsButton.setTypeface(myCustomFont);
-        spaceshipsButton.setTypeface(myCustomFont);
+        starshipsButton.setTypeface(myCustomFont);
         vehiclesButton.setTypeface(myCustomFont);
         speciesButton.setTypeface(myCustomFont);
 
@@ -102,11 +102,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        spaceshipsButton.setOnClickListener(new View.OnClickListener(){
+        starshipsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-                intent.putExtra("ListViewType", SPACESHIPS);
+                intent.putExtra("ListViewType", STARSHIPS);
                 startActivity(intent);
                 finish();
             }

@@ -42,7 +42,7 @@
             android:text="Films"/>
 
         <Button
-            android:id="@+id/getSpaceshipsButton"
+            android:id="@+id/getStarshipsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Starships"/>
