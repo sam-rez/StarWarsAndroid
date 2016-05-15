@@ -1,9 +1,12 @@
 package com.example.android.starwarsv2;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,8 +20,24 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+
+/** People, Planets, Films, Spaceships, Vehicles, and Species **/
+
 public class MainActivity extends AppCompatActivity {
 
+    protected static final String PEOPLE = "People";
+    protected static final String PLANETS = "Planets";
+    protected static final String FILMS = "Films";
+    protected static final String SPACESHIPS = "Spaceships";
+    protected static final String VEHICLES = "Vehicles";
+    protected static final String SPECIES = "Species";
+
+    protected Button peopleButton;
+    protected Button planetsButton;
+    protected Button filmsButton;
+    protected Button spaceshipsButton;
+    protected Button vehiclesButton;
+    protected Button speciesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,30 +45,92 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView textViewCustom = (TextView) findViewById(R.id.test);
+        peopleButton = (Button) findViewById(R.id.getPeopleButton);
+        planetsButton = (Button) findViewById(R.id.getPlanetsButton);
+        filmsButton = (Button) findViewById(R.id.getFilmsButton);
+        spaceshipsButton = (Button) findViewById(R.id.getSpaceshipsButton);
+        vehiclesButton = (Button) findViewById(R.id.getVehiclesButton);
+        speciesButton = (Button) findViewById(R.id.getSpeciesButton);
+
         Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/Starjedi.ttf");
         textViewCustom.setTypeface(myCustomFont);
+        peopleButton.setTypeface(myCustomFont);
+        planetsButton.setTypeface(myCustomFont);
+        filmsButton.setTypeface(myCustomFont);
+        spaceshipsButton.setTypeface(myCustomFont);
+        vehiclesButton.setTypeface(myCustomFont);
+        speciesButton.setTypeface(myCustomFont);
 
-        StarWarsApi.init();
-
-        for(int i = 1; i <= 7; i++) {
-            StarWarsApi.getApi().getAllPeople(i, new Callback<SWModelList<People>>() {
-                @Override
-                public void success(SWModelList<People> planetSWModelList, Response response) {
-                    Log.e("TEST", "TESTING");
-                    for (People p : planetSWModelList.results) {
-                        System.out.println("Person:" + p.name);
-                    }
-
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    System.out.print("failure");
-                }
-            });
-        }
+        initAddListeners();
 
     }
 
+    /**
+     * Method is used to encapsulate the code that initializes and sets the
+     * Event Listeners which will respond to requests to get data. This will
+     * launch a new activity
+     */
+    protected void initAddListeners(){
+
+        peopleButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                intent.putExtra("ListViewType", PEOPLE);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        planetsButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                intent.putExtra("ListViewType", PLANETS);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        filmsButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                intent.putExtra("ListViewType", FILMS);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        spaceshipsButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                intent.putExtra("ListViewType", SPACESHIPS);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        vehiclesButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                intent.putExtra("ListViewType", VEHICLES);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        speciesButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                intent.putExtra("ListViewType", SPECIES);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
 
 }

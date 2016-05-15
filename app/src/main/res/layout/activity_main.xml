@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.android.starwarsv2.MainActivity">
+    tools:context="com.example.android.starwarsv2.MainActivity"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/test"
@@ -16,5 +17,48 @@
         android:textSize="64sp"
         android:text="Star\nWars"
         android:textColor="#e1cc2f" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/getPeopleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="People"/>
+
+        <Button
+            android:id="@+id/getPlanetsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Planets"/>
+
+        <Button
+            android:id="@+id/getFilmsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Films"/>
+
+        <Button
+            android:id="@+id/getSpaceshipsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Starships"/>
+
+        <Button
+            android:id="@+id/getVehiclesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vehicles"/>
+
+        <Button
+            android:id="@+id/getSpeciesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Species"/>
+
+    </LinearLayout>
 
 </LinearLayout>
