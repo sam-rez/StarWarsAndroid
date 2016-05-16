@@ -7,8 +7,10 @@
         android:id="@+id/listText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
+        android:textColor="#4BD5EE"
+        android:textSize="32dp"
         android:padding="8dp"
+        android:textAlignment="center"
         android:text="This is a really long chunk of text that will be replaced, never to be seen again, when an item is added to the list  "/>
 
 

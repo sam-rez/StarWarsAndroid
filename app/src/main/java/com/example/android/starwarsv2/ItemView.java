@@ -1,6 +1,7 @@
 package com.example.android.starwarsv2;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -25,14 +26,18 @@ public class ItemView extends LinearLayout {
 
     private TextView m_text;
 
+
     public ItemView(Context context, People p){
         super(context);
+
+        Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), "fonts/Starjedi.ttf");
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.list_view, this, true);
 
         m_text = (TextView) findViewById(R.id.listText);
-        m_text.setText(p.name);
+        m_text.setTypeface(myCustomFont);
+        m_text.setText(p.name.toLowerCase());
 
         requestLayout();
     }
@@ -40,11 +45,14 @@ public class ItemView extends LinearLayout {
     public ItemView(Context context, Planet p){
         super(context);
 
+        Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), "fonts/Starjedi.ttf");
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.list_view, this, true);
 
         m_text = (TextView) findViewById(R.id.listText);
-        m_text.setText(p.name);
+        m_text.setTypeface(myCustomFont);
+        m_text.setText(p.name.toLowerCase());
 
         requestLayout();
     }
@@ -53,11 +61,14 @@ public class ItemView extends LinearLayout {
     public ItemView(Context context, Film f){
         super(context);
 
+        Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), "fonts/Starjedi.ttf");
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.list_view, this, true);
 
         m_text = (TextView) findViewById(R.id.listText);
-        m_text.setText(f.title);
+        m_text.setTypeface(myCustomFont);
+        m_text.setText(f.title.toLowerCase());
 
         requestLayout();
     }
@@ -65,11 +76,14 @@ public class ItemView extends LinearLayout {
     public ItemView(Context context, Vehicle v){
         super(context);
 
+        Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), "fonts/Starjedi.ttf");
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.list_view, this, true);
 
         m_text = (TextView) findViewById(R.id.listText);
-        m_text.setText(v.name);
+        m_text.setTypeface(myCustomFont);
+        m_text.setText(v.name.toLowerCase());
 
         requestLayout();
     }
@@ -77,11 +91,14 @@ public class ItemView extends LinearLayout {
     public ItemView(Context context, Species s){
         super(context);
 
+        Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), "fonts/Starjedi.ttf");
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.list_view, this, true);
 
         m_text = (TextView) findViewById(R.id.listText);
-        m_text.setText(s.name);
+        m_text.setTypeface(myCustomFont);
+        m_text.setText(s.name.toLowerCase());
 
         requestLayout();
     }
@@ -89,11 +106,14 @@ public class ItemView extends LinearLayout {
     public ItemView(Context context, Starship s){
         super(context);
 
+        Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), "fonts/Starjedi.ttf");
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.list_view, this, true);
 
         m_text = (TextView) findViewById(R.id.listText);
-        m_text.setText(s.name);
+        m_text.setTypeface(myCustomFont);
+        m_text.setText(s.name.toLowerCase());
 
         requestLayout();
     }
