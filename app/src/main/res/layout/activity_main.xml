@@ -15,49 +15,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="64sp"
-        android:text="Star\nWars"
+        android:text="\@"
         android:textColor="#e1cc2f" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/getPeopleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="People"/>
+            android:textAllCaps="false"
+            android:text="people"/>
 
         <Button
             android:id="@+id/getPlanetsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Planets"/>
+            android:textAllCaps="false"
+            android:text="planets"/>
 
         <Button
             android:id="@+id/getFilmsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Films"/>
+            android:textAllCaps="false"
+            android:text="films"/>
 
         <Button
             android:id="@+id/getStarshipsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Starships"/>
+            android:textAllCaps="false"
+            android:text="starships"/>
 
         <Button
             android:id="@+id/getVehiclesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vehicles"/>
+            android:textAllCaps="false"
+            android:text="vehicles"/>
 
         <Button
             android:id="@+id/getSpeciesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Species"/>
+            android:textAllCaps="false"
+            android:text="species"/>
 
     </LinearLayout>
 
