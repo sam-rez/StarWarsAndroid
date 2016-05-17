@@ -51,7 +51,9 @@ public class PeopleAdapter extends BaseAdapter {
         if(convertView == null){
             itemView = new ItemView(this.m_context, this.m_peopleList.get(position));
         }else{
-            itemView = (ItemView)convertView;
+            //itemView = (ItemView)convertView;
+            itemView = new ItemView(this.m_context, this.m_peopleList.get(position));
+
         }
         return itemView;
 

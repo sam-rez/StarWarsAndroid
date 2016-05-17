@@ -3,6 +3,8 @@ package com.example.android.starwarsv2;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.starwarsv2.adapters.*;
@@ -97,6 +99,12 @@ public class ListActivity extends AppCompatActivity {
             case MainActivity.PEOPLE:
                 m_vwPeopleLayout = (ListView) findViewById(R.id.ItemListViewGroup);
                 m_vwPeopleLayout.setAdapter(m_peopleAdapter);
+                m_vwPeopleLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Log.d("TAG", "onItemClick: clicked!");
+                    }
+                });
                 api.getAllPeople(1, new Callback<SWModelList<People>>() {
                     @Override
                     public void success(SWModelList<People> planetSWModelList, Response response) {
@@ -114,6 +122,12 @@ public class ListActivity extends AppCompatActivity {
             case MainActivity.FILMS:
                 m_vwFilmsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
                 m_vwFilmsLayout.setAdapter(m_filmsAdapter);
+                m_vwFilmsLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Log.d("TAG", "onItemClick: clicked!");
+                    }
+                });
                 api.getAllFilms(1, new Callback<SWModelList<Film>>() {
                     @Override
                     public void success(SWModelList<Film> filmSWModelList, Response response) {
@@ -131,6 +145,12 @@ public class ListActivity extends AppCompatActivity {
             case MainActivity.PLANETS:
                 m_vwPlanetsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
                 m_vwPlanetsLayout.setAdapter(m_planetsAdapter);
+                m_vwPlanetsLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Log.d("TAG", "onItemClick: clicked!");
+                    }
+                });
                 api.getAllPlanets(1, new Callback<SWModelList<Planet>>() {
                     @Override
                     public void success(SWModelList<Planet> planetSWModelList, Response response) {
@@ -148,6 +168,12 @@ public class ListActivity extends AppCompatActivity {
             case MainActivity.STARSHIPS:
                 m_vwStarshipsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
                 m_vwStarshipsLayout.setAdapter(m_starshipsAdapter);
+                m_vwStarshipsLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Log.d("TAG", "onItemClick: clicked!");
+                    }
+                });
                 api.getAllStarships(2, new Callback<SWModelList<Starship>>() {
                     @Override
                     public void success(SWModelList<Starship> starshipSWModelList, Response response) {
@@ -165,6 +191,12 @@ public class ListActivity extends AppCompatActivity {
             case MainActivity.VEHICLES:
                 m_vwVehiclesLayout = (ListView)findViewById(R.id.ItemListViewGroup);
                 m_vwVehiclesLayout.setAdapter(m_vehiclesAdapter);
+                m_vwVehiclesLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Log.d("TAG", "onItemClick: clicked!");
+                    }
+                });
                 api.getAllVehicles(2, new Callback<SWModelList<Vehicle>>() {
                     @Override
                     public void success(SWModelList<Vehicle> vehicleSWModelList, Response response) {
@@ -182,6 +214,12 @@ public class ListActivity extends AppCompatActivity {
             case MainActivity.SPECIES:
                 m_vwSpeciesLayout = (ListView)findViewById(R.id.ItemListViewGroup);
                 m_vwSpeciesLayout.setAdapter(m_speciesAdapter);
+                m_vwSpeciesLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Log.d("TAG", "onItemClick: clicked!");
+                    }
+                });
                 api.getAllSpecies(2, new Callback<SWModelList<Species>>() {
                     @Override
                     public void success(SWModelList<Species> speciesSWModelList, Response response) {

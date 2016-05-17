@@ -20,6 +20,9 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+//TODO Make ItemView a button w/ onClickListeners
+//TODO Fix scrolling repeat issue
+//TODO spinner
 
 /** People, Planets, Films, Starships, Vehicles, and Species **/
 
@@ -78,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ListActivity.class);
                 intent.putExtra("ListViewType", PEOPLE);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -88,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 intent.putExtra("ListViewType", PLANETS);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -98,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ListActivity.class);
                 intent.putExtra("ListViewType", FILMS);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ListActivity.class);
                 intent.putExtra("ListViewType", STARSHIPS);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -118,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ListActivity.class);
                 intent.putExtra("ListViewType", VEHICLES);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -128,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ListActivity.class);
                 intent.putExtra("ListViewType", SPECIES);
                 startActivity(intent);
-                finish();
             }
         });
     }
