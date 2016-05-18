@@ -20,6 +20,7 @@ import com.swapi.sw.StarWars;
 import com.swapi.sw.StarWarsApi;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -103,7 +104,6 @@ public class ListActivity extends AppCompatActivity {
                 m_vwPeopleLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("TAG", "onItemClick: clicked!");
                         Intent intent = new Intent(getApplicationContext(), IndividualActivity.class);
                         intent.putExtra("ListViewType", MainActivity.PEOPLE);
                         intent.putExtra("name", peopleArrayList.get(position).name);
@@ -116,19 +116,57 @@ public class ListActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-                api.getAllPeople(1, new Callback<SWModelList<People>>() {
-                    @Override
-                    public void success(SWModelList<People> planetSWModelList, Response response) {
-                        for (People p : planetSWModelList.results) {
-                            peopleArrayList.add(p);
+                for(int i = 1; i < 3/*10*/; i++) {
+                    api.getAllPeople(i, new Callback<SWModelList<People>>() {
+                        @Override
+                        public void success(SWModelList<People> planetSWModelList, Response response) {
+                            for (People p : planetSWModelList.results) {
+                                peopleArrayList.add(p);
+                                m_peopleAdapter.notifyDataSetChanged();
+                                System.out.println(p.name);
+                            }
                         }
-                        m_peopleAdapter.notifyDataSetChanged();
-                    }
+                        @Override
+                        public void failure(RetrofitError error) {
+                            System.out.print("failure");
+                        }
+                    });
+                }
+                break;
+            case MainActivity.PLANETS:
+                m_vwPlanetsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
+                m_vwPlanetsLayout.setAdapter(m_planetsAdapter);
+                m_vwPlanetsLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                     @Override
-                    public void failure(RetrofitError error) {
-                        System.out.print("failure");
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(ListActivity.this, IndividualActivity.class);
+                        intent.putExtra("ListViewType", MainActivity.PLANETS);
+                        intent.putExtra("name", planetArrayList.get(position).name);
+                        intent.putExtra("climate", planetArrayList.get(position).climate);
+                        intent.putExtra("diameter", planetArrayList.get(position).diameter);
+                        intent.putExtra("population", planetArrayList.get(position).population);
+                        intent.putExtra("rotation_period", planetArrayList.get(position).rotationPeriod);
+                        intent.putExtra("terrain", planetArrayList.get(position).terrain);
+                        intent.putExtra("gravity", planetArrayList.get(position).gravity);
                     }
                 });
+                for(int i = 1; i < 8; i++) {
+                    api.getAllPlanets(i, new Callback<SWModelList<Planet>>() {
+                        @Override
+                        public void success(SWModelList<Planet> planetSWModelList, Response response) {
+                            for (Planet p : planetSWModelList.results) {
+                                planetArrayList.add(p);
+                                m_planetsAdapter.notifyDataSetChanged();
+                                System.out.println(p.name);
+                            }
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            System.out.print("failure");
+                        }
+                    });
+                }
                 break;
             case MainActivity.FILMS:
                 m_vwFilmsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
@@ -136,7 +174,8 @@ public class ListActivity extends AppCompatActivity {
                 m_vwFilmsLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("TAG", "onItemClick: clicked!");
+                        Intent intent = new Intent(ListActivity.this, IndividualActivity.class);
+                        intent.putExtra("ListViewType", MainActivity.FILMS);
                     }
                 });
                 api.getAllFilms(1, new Callback<SWModelList<Film>>() {
@@ -153,36 +192,14 @@ public class ListActivity extends AppCompatActivity {
                     }
                 });
                 break;
-            case MainActivity.PLANETS:
-                m_vwPlanetsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
-                m_vwPlanetsLayout.setAdapter(m_planetsAdapter);
-                m_vwPlanetsLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("TAG", "onItemClick: clicked!");
-                    }
-                });
-                api.getAllPlanets(1, new Callback<SWModelList<Planet>>() {
-                    @Override
-                    public void success(SWModelList<Planet> planetSWModelList, Response response) {
-                        for (Planet p : planetSWModelList.results) {
-                            planetArrayList.add(p);
-                        }
-                        m_planetsAdapter.notifyDataSetChanged();
-                    }
-                    @Override
-                    public void failure(RetrofitError error) {
-                        System.out.print("failure");
-                    }
-                });
-                break;
             case MainActivity.STARSHIPS:
                 m_vwStarshipsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
                 m_vwStarshipsLayout.setAdapter(m_starshipsAdapter);
                 m_vwStarshipsLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("TAG", "onItemClick: clicked!");
+                        Intent intent = new Intent(ListActivity.this, IndividualActivity.class);
+                        intent.putExtra("ListViewType", MainActivity.STARSHIPS);
                     }
                 });
                 api.getAllStarships(2, new Callback<SWModelList<Starship>>() {
@@ -205,7 +222,8 @@ public class ListActivity extends AppCompatActivity {
                 m_vwVehiclesLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("TAG", "onItemClick: clicked!");
+                        Intent intent = new Intent(ListActivity.this, IndividualActivity.class);
+                        intent.putExtra("ListViewType", MainActivity.VEHICLES);
                     }
                 });
                 api.getAllVehicles(2, new Callback<SWModelList<Vehicle>>() {
@@ -228,7 +246,8 @@ public class ListActivity extends AppCompatActivity {
                 m_vwSpeciesLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("TAG", "onItemClick: clicked!");
+                        Intent intent = new Intent(ListActivity.this, IndividualActivity.class);
+                        intent.putExtra("ListViewType", MainActivity.SPECIES);
                     }
                 });
                 api.getAllSpecies(2, new Callback<SWModelList<Species>>() {
