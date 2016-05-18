@@ -1,5 +1,6 @@
 package com.example.android.starwarsv2;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -103,6 +104,16 @@ public class ListActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Log.d("TAG", "onItemClick: clicked!");
+                        Intent intent = new Intent(getApplicationContext(), IndividualActivity.class);
+                        intent.putExtra("ListViewType", MainActivity.PEOPLE);
+                        intent.putExtra("name", peopleArrayList.get(position).name);
+                        intent.putExtra("height", peopleArrayList.get(position).height);
+                        intent.putExtra("mass", peopleArrayList.get(position).mass);
+                        intent.putExtra("hair_color", peopleArrayList.get(position).hairColor);
+                        intent.putExtra("skin_color", peopleArrayList.get(position).skinColor);
+                        intent.putExtra("birth_year", peopleArrayList.get(position).birthYear);
+                        intent.putExtra("gender", peopleArrayList.get(position).gender);
+                        startActivity(intent);
                     }
                 });
                 api.getAllPeople(1, new Callback<SWModelList<People>>() {

@@ -14,8 +14,7 @@ import java.util.List;
  * Created by Sam on 5/10/16.
  */
 public class PeopleAdapter extends BaseAdapter {
-
-    /** The application Context in which this PeopleAdapter is being used. */
+          /** The application Context in which this PeopleAdapter is being used. */
     private Context m_context;
 
     /** The data set to which this PeopleAdapter is bound. */

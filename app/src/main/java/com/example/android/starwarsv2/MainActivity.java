@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         peopleButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 intent.putExtra("ListViewType", PEOPLE);
                 startActivity(intent);
             }
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         filmsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 intent.putExtra("ListViewType", FILMS);
                 startActivity(intent);
             }
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         starshipsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 intent.putExtra("ListViewType", STARSHIPS);
                 startActivity(intent);
             }
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         vehiclesButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 intent.putExtra("ListViewType", VEHICLES);
                 startActivity(intent);
             }
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         speciesButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 intent.putExtra("ListViewType", SPECIES);
                 startActivity(intent);
             }
