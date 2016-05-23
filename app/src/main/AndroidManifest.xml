@@ -11,7 +11,8 @@
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         tools:replace="android:icon">
         <activity android:name=".MainActivity"
-            android:label="Star Wars API">
+            android:label="Star Wars API"
+            android:screenOrientation="locked">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

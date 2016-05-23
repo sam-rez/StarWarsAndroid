@@ -29,7 +29,6 @@ public class IndividualActivity extends AppCompatActivity{
         ll.setOrientation(LinearLayout.VERTICAL);
         ll.setBackgroundResource(R.drawable.stars);
 
-        //setContentView(R.layout.activity_individual);
 
         /** Find which category is requested **/
         Bundle b = getIntent().getExtras();
@@ -49,6 +48,7 @@ public class IndividualActivity extends AppCompatActivity{
                 TextView people_name = new TextView(this);
                 people_name.setTextColor(Color.WHITE);
                 people_name.setText(b.getString("name"));
+                people_name.setTextSize(32);
                 ll.addView(people_name);
 
                 TextView people_height = new TextView(this);

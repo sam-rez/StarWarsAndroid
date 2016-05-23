@@ -8,7 +8,17 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/stars"
-    tools:context="com.example.android.starwarsv2.ListActivity">
+    tools:context="com.example.android.starwarsv2.ListActivity"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/text_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#4BD5EE"
+        android:text="TEST"
+        android:textSize="32dp"/>
 
     <ListView
         android:id="@+id/ItemListViewGroup"

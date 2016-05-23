@@ -20,9 +20,9 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-//TODO Make ItemView a button w/ onClickListeners
 //TODO Fix scrolling repeat issue
 //TODO spinner
+//TODO persist data
 
 /** People, Planets, Films, Starships, Vehicles, and Species **/
 
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView textViewCustom = (TextView) findViewById(R.id.test);
+        TextView title = (TextView) findViewById(R.id.title_main);
         peopleButton = (Button) findViewById(R.id.getPeopleButton);
         planetsButton = (Button) findViewById(R.id.getPlanetsButton);
         filmsButton = (Button) findViewById(R.id.getFilmsButton);
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         speciesButton = (Button) findViewById(R.id.getSpeciesButton);
 
         Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/Starjedi.ttf");
-        textViewCustom.setTypeface(myCustomFont);
+        title.setTypeface(myCustomFont);
         peopleButton.setTypeface(myCustomFont);
         planetsButton.setTypeface(myCustomFont);
         filmsButton.setTypeface(myCustomFont);

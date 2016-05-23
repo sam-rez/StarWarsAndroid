@@ -122,9 +122,9 @@ public class ListActivity extends AppCompatActivity {
                         public void success(SWModelList<People> planetSWModelList, Response response) {
                             for (People p : planetSWModelList.results) {
                                 peopleArrayList.add(p);
-                                m_peopleAdapter.notifyDataSetChanged();
                                 System.out.println(p.name);
                             }
+                            m_peopleAdapter.notifyDataSetChanged();
                         }
                         @Override
                         public void failure(RetrofitError error) {
