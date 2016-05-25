@@ -134,7 +134,7 @@ public class ListActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-                progress = ProgressDialog.show(this, "Loading", "Loading", true);
+                //progress = ProgressDialog.show(this, "Loading", "Loading", true);
                 for(int i = 1; i < 10; i++) {
                     api.getAllPeople(i, new Callback<SWModelList<People>>() {
                         @Override

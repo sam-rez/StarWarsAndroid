@@ -14,6 +14,7 @@ import com.swapi.models.People;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Sam on 5/17/16.
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 public class IndividualActivity extends AppCompatActivity{
 
     LinearLayout ll;
+
+    private String [] colors = {/*green*/ "#39FF14", /*red*/ "#FF2502", /*blue*/ "#0064FF", "#FFFFFF"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -48,15 +51,19 @@ public class IndividualActivity extends AppCompatActivity{
 
         switch (category){
             case MainActivity.PEOPLE:
+
+                String color = getRandom(colors);
+
                 TextView people_name = new TextView(this);
                 people_name.setGravity(Gravity.CENTER_HORIZONTAL);
-                people_name.setTextColor(Color.WHITE);
+                people_name.setPadding(0, 48, 0, 0);
+                people_name.setTextColor(Color.parseColor(color));
                 people_name.setText(b.getString("name"));
                 people_name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
                 ll.addView(people_name);
 
                 TextView people_height = new TextView(this);
-                people_height.setTextColor(Color.WHITE);
+                people_height.setTextColor(Color.parseColor(color));
                 people_height.setTextSize(24);
                 people_height.setText("Height: " + centimeters2feet(b.getString("height")));
                 ll.addView(people_height);
@@ -99,6 +106,13 @@ public class IndividualActivity extends AppCompatActivity{
 
     }
 
+    public String getRandom(String [] array) {
+
+        int rnd = new Random().nextInt(array.length);
+        return array[rnd];
+
+    }
+
     private int convertKGtoLB(String mass){
 
         double KGs, LBs;
@@ -124,7 +138,6 @@ public class IndividualActivity extends AppCompatActivity{
         }else{
             return "unknown";
         }
-
     }
 
 }
