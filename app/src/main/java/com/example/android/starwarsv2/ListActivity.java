@@ -1,14 +1,24 @@
 package com.example.android.starwarsv2;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.android.starwarsv2.adapters.*;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.swapi.models.Film;
 import com.swapi.models.People;
 import com.swapi.models.Planet;
@@ -19,6 +29,7 @@ import com.swapi.models.Vehicle;
 import com.swapi.sw.StarWars;
 import com.swapi.sw.StarWarsApi;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +67,8 @@ public class ListActivity extends AppCompatActivity {
     protected ArrayList<Vehicle> vehicleArrayList;
     protected ArrayList<Species> speciesArrayList;
 
+    protected TextView title;
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +90,10 @@ public class ListActivity extends AppCompatActivity {
         m_speciesAdapter = new SpeciesAdapter(this, speciesArrayList);
 
         initLayout();
+        title = (TextView)findViewById(R.id.list_title);
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Starjedi.ttf");
+        title.setTypeface(font);
+        getSupportActionBar().hide();
 
         /** Find which category is requested **/
         Bundle b = getIntent().getExtras();
@@ -99,6 +116,7 @@ public class ListActivity extends AppCompatActivity {
 
         switch (category) {
             case MainActivity.PEOPLE:
+                title.setText(category);
                 m_vwPeopleLayout = (ListView) findViewById(R.id.ItemListViewGroup);
                 m_vwPeopleLayout.setAdapter(m_peopleAdapter);
                 m_vwPeopleLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -116,7 +134,8 @@ public class ListActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-                for(int i = 1; i < 3/*10*/; i++) {
+                progress = ProgressDialog.show(this, "Loading", "Loading", true);
+                for(int i = 1; i < 10; i++) {
                     api.getAllPeople(i, new Callback<SWModelList<People>>() {
                         @Override
                         public void success(SWModelList<People> planetSWModelList, Response response) {
@@ -124,6 +143,7 @@ public class ListActivity extends AppCompatActivity {
                                 peopleArrayList.add(p);
                                 System.out.println(p.name);
                             }
+                            progress.dismiss();
                             m_peopleAdapter.notifyDataSetChanged();
                         }
                         @Override
@@ -134,6 +154,7 @@ public class ListActivity extends AppCompatActivity {
                 }
                 break;
             case MainActivity.PLANETS:
+                title.setText(category);
                 m_vwPlanetsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
                 m_vwPlanetsLayout.setAdapter(m_planetsAdapter);
                 m_vwPlanetsLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -169,6 +190,7 @@ public class ListActivity extends AppCompatActivity {
                 }
                 break;
             case MainActivity.FILMS:
+                title.setText(category);
                 m_vwFilmsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
                 m_vwFilmsLayout.setAdapter(m_filmsAdapter);
                 m_vwFilmsLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -193,6 +215,7 @@ public class ListActivity extends AppCompatActivity {
                 });
                 break;
             case MainActivity.STARSHIPS:
+                title.setText(category);
                 m_vwStarshipsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
                 m_vwStarshipsLayout.setAdapter(m_starshipsAdapter);
                 m_vwStarshipsLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -217,6 +240,7 @@ public class ListActivity extends AppCompatActivity {
                 });
                 break;
             case MainActivity.VEHICLES:
+                title.setText(category);
                 m_vwVehiclesLayout = (ListView)findViewById(R.id.ItemListViewGroup);
                 m_vwVehiclesLayout.setAdapter(m_vehiclesAdapter);
                 m_vwVehiclesLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -241,6 +265,7 @@ public class ListActivity extends AppCompatActivity {
                 });
                 break;
             case MainActivity.SPECIES:
+                title.setText(category);
                 m_vwSpeciesLayout = (ListView)findViewById(R.id.ItemListViewGroup);
                 m_vwSpeciesLayout.setAdapter(m_speciesAdapter);
                 m_vwSpeciesLayout.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -267,6 +292,30 @@ public class ListActivity extends AppCompatActivity {
             default:
                 Log.d("Shouldn't be here", "Shouldn't be here... ever");
         }
+    }
+
+    private void savePeopleArrayList(ArrayList<People> arrayList){
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        Gson gson = new Gson();
+
+        String json = gson.toJson(arrayList);
+
+        editor.putString("PeopleArrayList", json);
+        editor.commit();
+
+    }
+
+    private ArrayList<People> getPeopleArrayList(){
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("PeopleArrayList", null);
+        Type type = new TypeToken<ArrayList<People>>() {}.getType();
+        ArrayList<People> arrayList = gson.fromJson(json, type);
+        return arrayList;
+
     }
 
 }

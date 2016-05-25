@@ -1,10 +1,13 @@
 package com.example.android.starwarsv2;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.renderscript.Type;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,20 +23,21 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-//TODO Fix scrolling repeat issue
-//TODO spinner
 //TODO persist data
+//TODO height truncate
+//TODO ind view color
+//TODO strings class
 
 /** People, Planets, Films, Starships, Vehicles, and Species **/
 
 public class MainActivity extends AppCompatActivity {
 
-    protected static final String PEOPLE = "People";
-    protected static final String PLANETS = "Planets";
-    protected static final String FILMS = "Films";
-    protected static final String STARSHIPS = "Starships";
-    protected static final String VEHICLES = "Vehicles";
-    protected static final String SPECIES = "Species";
+    protected static final String PEOPLE = "people";
+    protected static final String PLANETS = "planets";
+    protected static final String FILMS = "films";
+    protected static final String STARSHIPS = "starships";
+    protected static final String VEHICLES = "vehicles";
+    protected static final String SPECIES = "species";
 
     protected Button peopleButton;
     protected Button planetsButton;
@@ -42,10 +46,14 @@ public class MainActivity extends AppCompatActivity {
     protected Button vehiclesButton;
     protected Button speciesButton;
 
+    public String [] colors = {/*green*/ "#39FF14", /*red*/ "#FF2502", /*blue*/ "#0064FF"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportActionBar().hide();
 
         TextView title = (TextView) findViewById(R.id.title_main);
         peopleButton = (Button) findViewById(R.id.getPeopleButton);
@@ -55,14 +63,15 @@ public class MainActivity extends AppCompatActivity {
         vehiclesButton = (Button) findViewById(R.id.getVehiclesButton);
         speciesButton = (Button) findViewById(R.id.getSpeciesButton);
 
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/Starjedi.ttf");
-        title.setTypeface(myCustomFont);
-        peopleButton.setTypeface(myCustomFont);
-        planetsButton.setTypeface(myCustomFont);
-        filmsButton.setTypeface(myCustomFont);
-        starshipsButton.setTypeface(myCustomFont);
-        vehiclesButton.setTypeface(myCustomFont);
-        speciesButton.setTypeface(myCustomFont);
+        Typeface starjedi = Typeface.createFromAsset(getAssets(), "fonts/Starjedi.ttf");
+        Typeface starjhol = Typeface.createFromAsset(getAssets(), "fonts/Starjhol.ttf");
+        title.setTypeface(starjhol);
+        peopleButton.setTypeface(starjedi);
+        planetsButton.setTypeface(starjedi);
+        filmsButton.setTypeface(starjedi);
+        starshipsButton.setTypeface(starjedi);
+        vehiclesButton.setTypeface(starjedi);
+        speciesButton.setTypeface(starjedi);
 
         initAddListeners();
 
@@ -75,57 +84,105 @@ public class MainActivity extends AppCompatActivity {
      */
     protected void initAddListeners(){
 
-        peopleButton.setOnClickListener(new View.OnClickListener(){
+        peopleButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra("ListViewType", PEOPLE);
-                startActivity(intent);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    peopleButton.setBackgroundColor(Color.parseColor("#F5C14A"));
+                    Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                    intent.putExtra("ListViewType", PEOPLE);
+                    startActivity(intent);
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    peopleButton.setBackgroundColor(Color.parseColor("#E5B13A"));
+                    return true;
+                }
+                return false;
             }
         });
 
-        planetsButton.setOnClickListener(new View.OnClickListener(){
+        planetsButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra("ListViewType", PLANETS);
-                startActivity(intent);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    planetsButton.setBackgroundColor(Color.parseColor("#F5C14A"));
+                    Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                    intent.putExtra("ListViewType", PLANETS);
+                    startActivity(intent);
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    planetsButton.setBackgroundColor(Color.parseColor("#E5B13A"));
+                    return true;
+                }
+                return false;
             }
         });
 
-        filmsButton.setOnClickListener(new View.OnClickListener(){
+        filmsButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra("ListViewType", FILMS);
-                startActivity(intent);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    filmsButton.setBackgroundColor(Color.parseColor("#F5C14A"));
+                    Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                    intent.putExtra("ListViewType", FILMS);
+                    startActivity(intent);
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    filmsButton.setBackgroundColor(Color.parseColor("#E5B13A"));
+                    return true;
+                }
+                return false;
             }
         });
 
-        starshipsButton.setOnClickListener(new View.OnClickListener(){
+        starshipsButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra("ListViewType", STARSHIPS);
-                startActivity(intent);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    starshipsButton.setBackgroundColor(Color.parseColor("#F5C14A"));
+                    Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                    intent.putExtra("ListViewType", STARSHIPS);
+                    startActivity(intent);
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    starshipsButton.setBackgroundColor(Color.parseColor("#E5B13A"));
+                    return true;
+                }
+                return false;
             }
         });
 
-        vehiclesButton.setOnClickListener(new View.OnClickListener(){
+        vehiclesButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra("ListViewType", VEHICLES);
-                startActivity(intent);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    vehiclesButton.setBackgroundColor(Color.parseColor("#F5C14A"));
+                    Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                    intent.putExtra("ListViewType", VEHICLES);
+                    startActivity(intent);
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    vehiclesButton.setBackgroundColor(Color.parseColor("#E5B13A"));
+                    return true;
+                }
+                return false;
             }
         });
 
-        speciesButton.setOnClickListener(new View.OnClickListener(){
+        speciesButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra("ListViewType", SPECIES);
-                startActivity(intent);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    speciesButton.setBackgroundColor(Color.parseColor("#F5C14A"));
+                    Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                    intent.putExtra("ListViewType", SPECIES);
+                    startActivity(intent);
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    speciesButton.setBackgroundColor(Color.parseColor("#E5B13A"));
+                    return true;
+                }
+                return false;
             }
         });
     }
