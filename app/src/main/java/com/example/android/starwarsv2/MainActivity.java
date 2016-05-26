@@ -23,9 +23,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-//TODO persist data
-//TODO height truncate
-//TODO ind view color
+
 //TODO strings class
 
 /** People, Planets, Films, Starships, Vehicles, and Species **/
@@ -51,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         getSupportActionBar().hide();
 
         TextView title = (TextView) findViewById(R.id.title_main);

@@ -40,6 +40,8 @@ import retrofit.client.Response;
 /** Planets, Starships, Vehicles, People, Films and Species **/
 /** Class that displays all the views for a particular category **/
 
+//TODO persist data
+
 public class ListActivity extends AppCompatActivity {
 
     /** Adapter used to bind an AdapterView to a ListView. */
@@ -134,7 +136,7 @@ public class ListActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-                //progress = ProgressDialog.show(this, "Loading", "Loading", true);
+                progress = ProgressDialog.show(this, "Loading", "Loading", true);
                 for(int i = 1; i < 10; i++) {
                     api.getAllPeople(i, new Callback<SWModelList<People>>() {
                         @Override
@@ -153,6 +155,7 @@ public class ListActivity extends AppCompatActivity {
                     });
                 }
                 break;
+
             case MainActivity.PLANETS:
                 title.setText(category);
                 m_vwPlanetsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
@@ -169,17 +172,20 @@ public class ListActivity extends AppCompatActivity {
                         intent.putExtra("rotation_period", planetArrayList.get(position).rotationPeriod);
                         intent.putExtra("terrain", planetArrayList.get(position).terrain);
                         intent.putExtra("gravity", planetArrayList.get(position).gravity);
+                        startActivity(intent);
                     }
                 });
+                progress = ProgressDialog.show(this, "Loading", "Loading", true);
                 for(int i = 1; i < 8; i++) {
                     api.getAllPlanets(i, new Callback<SWModelList<Planet>>() {
                         @Override
                         public void success(SWModelList<Planet> planetSWModelList, Response response) {
                             for (Planet p : planetSWModelList.results) {
                                 planetArrayList.add(p);
-                                m_planetsAdapter.notifyDataSetChanged();
                                 System.out.println(p.name);
                             }
+                            progress.dismiss();
+                            m_planetsAdapter.notifyDataSetChanged();
                         }
 
                         @Override
@@ -189,6 +195,7 @@ public class ListActivity extends AppCompatActivity {
                     });
                 }
                 break;
+
             case MainActivity.FILMS:
                 title.setText(category);
                 m_vwFilmsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
@@ -198,8 +205,14 @@ public class ListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(ListActivity.this, IndividualActivity.class);
                         intent.putExtra("ListViewType", MainActivity.FILMS);
+                        intent.putExtra("title", filmArrayList.get(position).title);
+                        intent.putExtra("episode", filmArrayList.get(position).episodeId);
+                        intent.putExtra("director", filmArrayList.get(position).director);
+                        intent.putExtra("opening_crawl", filmArrayList.get(position).openingCrawl);
+                        startActivity(intent);
                     }
                 });
+                progress = ProgressDialog.show(this, "Loading", "Loading", true);
                 api.getAllFilms(1, new Callback<SWModelList<Film>>() {
                     @Override
                     public void success(SWModelList<Film> filmSWModelList, Response response) {
@@ -207,6 +220,7 @@ public class ListActivity extends AppCompatActivity {
                         for(Film f : filmSWModelList.results) {
                             filmArrayList.add(f);
                         }
+                        progress.dismiss();
                         m_filmsAdapter.notifyDataSetChanged();
                     }
                     @Override
@@ -214,6 +228,7 @@ public class ListActivity extends AppCompatActivity {
                     }
                 });
                 break;
+
             case MainActivity.STARSHIPS:
                 title.setText(category);
                 m_vwStarshipsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
@@ -223,22 +238,41 @@ public class ListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(ListActivity.this, IndividualActivity.class);
                         intent.putExtra("ListViewType", MainActivity.STARSHIPS);
+                        intent.putExtra("name", starshipArrayList.get(position).name);
+                        intent.putExtra("manufacturer", starshipArrayList.get(position).manufacturer);
+                        intent.putExtra("model", starshipArrayList.get(position).model);
+                        intent.putExtra("class", starshipArrayList.get(position).starshipClass);
+                        intent.putExtra("cost", starshipArrayList.get(position).costInCredits);
+                        intent.putExtra("length", starshipArrayList.get(position).length);
+                        intent.putExtra("crew", starshipArrayList.get(position).crew);
+                        intent.putExtra("passengers", starshipArrayList.get(position).passengers);
+                        intent.putExtra("speed", starshipArrayList.get(position).maxAtmospheringSpeed);
+                        intent.putExtra("consumables", starshipArrayList.get(position).consumables);
+                        startActivity(intent);
                     }
                 });
-                api.getAllStarships(2, new Callback<SWModelList<Starship>>() {
-                    @Override
-                    public void success(SWModelList<Starship> starshipSWModelList, Response response) {
-                        System.out.println("Count:"+ starshipSWModelList.count);
-                        for(Starship s : starshipSWModelList.results) {
-                            starshipArrayList.add(s);
+                progress = ProgressDialog.show(this, "Loading", "Loading", true);
+                for(int i = 1; i < 5; i++) {
+                    api.getAllStarships(i, new Callback<SWModelList<Starship>>() {
+                        @Override
+                        public void success(SWModelList<Starship> starshipSWModelList, Response response) {
+                            System.out.println("Count:" + starshipSWModelList.count);
+                            for (Starship s : starshipSWModelList.results) {
+                                starshipArrayList.add(s);
+                                System.out.println(s.name);
+
+                            }
+                            progress.dismiss();
+                            m_starshipsAdapter.notifyDataSetChanged();
                         }
-                        m_starshipsAdapter.notifyDataSetChanged();
-                    }
-                    @Override
-                    public void failure(RetrofitError error) {
-                    }
-                });
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                        }
+                    });
+                }
                 break;
+
             case MainActivity.VEHICLES:
                 title.setText(category);
                 m_vwVehiclesLayout = (ListView)findViewById(R.id.ItemListViewGroup);
@@ -248,22 +282,37 @@ public class ListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(ListActivity.this, IndividualActivity.class);
                         intent.putExtra("ListViewType", MainActivity.VEHICLES);
+                        intent.putExtra("name", vehicleArrayList.get(position).name);
+                        intent.putExtra("manufacturer", vehicleArrayList.get(position).manufacturer);
+                        intent.putExtra("class", vehicleArrayList.get(position).vehicleClass);
+                        intent.putExtra("length", vehicleArrayList.get(position).length);
+                        intent.putExtra("cost", vehicleArrayList.get(position).costInCredits);
+                        intent.putExtra("crew", vehicleArrayList.get(position).crew);
+                        intent.putExtra("passengers", vehicleArrayList.get(position).passengers);
+                        intent.putExtra("consumables", vehicleArrayList.get(position).consumables);
+                        startActivity(intent);
                     }
                 });
-                api.getAllVehicles(2, new Callback<SWModelList<Vehicle>>() {
-                    @Override
-                    public void success(SWModelList<Vehicle> vehicleSWModelList, Response response) {
-                        System.out.println("Count:"+ vehicleSWModelList.count);
-                        for(Vehicle v : vehicleSWModelList.results) {
-                            vehicleArrayList.add(v);
+                progress = ProgressDialog.show(this, "Loading", "Loading", true);
+                for(int i = 1; i < 5; i++) {
+                    api.getAllVehicles(i, new Callback<SWModelList<Vehicle>>() {
+                        @Override
+                        public void success(SWModelList<Vehicle> vehicleSWModelList, Response response) {
+                            System.out.println("Count:" + vehicleSWModelList.count);
+                            for (Vehicle v : vehicleSWModelList.results) {
+                                vehicleArrayList.add(v);
+                            }
+                            progress.dismiss();
+                            m_vehiclesAdapter.notifyDataSetChanged();
                         }
-                        m_vehiclesAdapter.notifyDataSetChanged();
-                    }
-                    @Override
-                    public void failure(RetrofitError error) {
-                    }
-                });
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                        }
+                    });
+                }
                 break;
+
             case MainActivity.SPECIES:
                 title.setText(category);
                 m_vwSpeciesLayout = (ListView)findViewById(R.id.ItemListViewGroup);
@@ -273,21 +322,36 @@ public class ListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(ListActivity.this, IndividualActivity.class);
                         intent.putExtra("ListViewType", MainActivity.SPECIES);
+                        intent.putExtra("name", speciesArrayList.get(position).name);
+                        intent.putExtra("classification", speciesArrayList.get(position).classification);
+                        intent.putExtra("designation", speciesArrayList.get(position).designation);
+                        intent.putExtra("average_height", speciesArrayList.get(position).averageHeight);
+                        intent.putExtra("average_lifespan", speciesArrayList.get(position).averageLifespan);
+                        intent.putExtra("eye_colors", speciesArrayList.get(position).eyeColors);
+                        intent.putExtra("hair_colors", speciesArrayList.get(position).hairColors);
+                        intent.putExtra("skin_colors", speciesArrayList.get(position).skinColors);
+                        intent.putExtra("language", speciesArrayList.get(position).language);
+                        startActivity(intent);
                     }
                 });
-                api.getAllSpecies(2, new Callback<SWModelList<Species>>() {
-                    @Override
-                    public void success(SWModelList<Species> speciesSWModelList, Response response) {
-                        System.out.println("Count:"+ speciesSWModelList.count);
-                        for(Species s : speciesSWModelList.results) {
-                            speciesArrayList.add(s);
+                progress = ProgressDialog.show(this, "Loading", "Loading", true);
+                for(int i = 1; i < 5; i++) {
+                    api.getAllSpecies(i, new Callback<SWModelList<Species>>() {
+                        @Override
+                        public void success(SWModelList<Species> speciesSWModelList, Response response) {
+                            System.out.println("Count:" + speciesSWModelList.count);
+                            for (Species s : speciesSWModelList.results) {
+                                speciesArrayList.add(s);
+                            }
+                            progress.dismiss();
+                            m_speciesAdapter.notifyDataSetChanged();
                         }
-                        m_speciesAdapter.notifyDataSetChanged();
-                    }
-                    @Override
-                    public void failure(RetrofitError error) {
-                    }
-                });
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                        }
+                    });
+                }
                 break;
             default:
                 Log.d("Shouldn't be here", "Shouldn't be here... ever");
