@@ -52,7 +52,7 @@ public class FilmsAdapter extends BaseAdapter{
         if(convertView == null){
             itemView = new ItemView(this.m_context, this.m_filmsList.get(position));
         }else{
-            itemView = (ItemView) convertView;
+            itemView = new ItemView(this.m_context, this.m_filmsList.get(position));
         }
         return itemView;
     }

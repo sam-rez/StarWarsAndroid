@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">StarWarsv2</string>
+    <string name="app_name">StarWars</string>
+
+    <string name="people">people</string>
+    <string name="planets">planets</string>
+    <string name="films">films</string>
+    <string name="starships">starships</string>
+    <string name="vehicles">vehicles</string>
+    <string name="species">species</string>
+
+    <string name="yellowUpPress">"#E5B13A"</string>
+    <string name="yellowDownPress">"#F5C14A"</string>
+
 </resources>

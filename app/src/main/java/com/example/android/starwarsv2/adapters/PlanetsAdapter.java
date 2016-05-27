@@ -51,7 +51,7 @@ public class PlanetsAdapter extends BaseAdapter{
         if(convertView == null){
             itemView = new ItemView(this.m_context, this.m_planetsList.get(position));
         }else{
-            itemView = (ItemView) convertView;
+            itemView = new ItemView(this.m_context, this.m_planetsList.get(position));
         }
         return itemView;
     }

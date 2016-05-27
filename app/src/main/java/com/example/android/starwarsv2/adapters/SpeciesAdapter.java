@@ -53,7 +53,7 @@ public class SpeciesAdapter extends BaseAdapter{
         if(convertView == null){
             itemView = new ItemView(this.m_context, this.m_speciesList.get(position));
         }else{
-            itemView = (ItemView) convertView;
+            itemView = new ItemView(this.m_context, this.m_speciesList.get(position));
         }
         return itemView;
 

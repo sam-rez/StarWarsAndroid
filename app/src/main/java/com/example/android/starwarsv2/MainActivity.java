@@ -24,9 +24,9 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-//TODO strings class
-
 /** People, Planets, Films, Starships, Vehicles, and Species **/
+
+//TODO scrollview buttons
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     protected static final String STARSHIPS = "starships";
     protected static final String VEHICLES = "vehicles";
     protected static final String SPECIES = "species";
+
+    private String yellowUpPress = "";
+    private String yellowDownPress = "";
 
     protected Button peopleButton;
     protected Button planetsButton;
@@ -62,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
         Typeface starjedi = Typeface.createFromAsset(getAssets(), "fonts/Starjedi.ttf");
         Typeface starjhol = Typeface.createFromAsset(getAssets(), "fonts/Starjhol.ttf");
         title.setTypeface(starjhol);
+
+        yellowUpPress = getResources().getString(R.string.yellowUpPress);
+        yellowDownPress = getResources().getString(R.string.yellowDownPress);
+
         peopleButton.setTypeface(starjedi);
         planetsButton.setTypeface(starjedi);
         filmsButton.setTypeface(starjedi);
@@ -84,10 +91,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    peopleButton.setBackgroundColor(Color.parseColor("#F5C14A"));
+                    peopleButton.setBackgroundColor(Color.parseColor(yellowDownPress));
                     return true;
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    peopleButton.setBackgroundColor(Color.parseColor("#E5B13A"));
+                    peopleButton.setBackgroundColor(Color.parseColor(yellowUpPress));
                     Intent intent = new Intent(MainActivity.this, ListActivity.class);
                     intent.putExtra("ListViewType", PEOPLE);
                     startActivity(intent);
@@ -101,10 +108,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    planetsButton.setBackgroundColor(Color.parseColor("#F5C14A"));
+                    planetsButton.setBackgroundColor(Color.parseColor(yellowDownPress));
                     return true;
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    planetsButton.setBackgroundColor(Color.parseColor("#E5B13A"));
+                    planetsButton.setBackgroundColor(Color.parseColor(yellowUpPress));
                     Intent intent = new Intent(MainActivity.this, ListActivity.class);
                     intent.putExtra("ListViewType", PLANETS);
                     startActivity(intent);
@@ -118,10 +125,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    filmsButton.setBackgroundColor(Color.parseColor("#F5C14A"));
+                    filmsButton.setBackgroundColor(Color.parseColor(yellowDownPress));
                     return true;
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    filmsButton.setBackgroundColor(Color.parseColor("#E5B13A"));
+                    filmsButton.setBackgroundColor(Color.parseColor(yellowUpPress));
                     Intent intent = new Intent(MainActivity.this, ListActivity.class);
                     intent.putExtra("ListViewType", FILMS);
                     startActivity(intent);
@@ -135,10 +142,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    starshipsButton.setBackgroundColor(Color.parseColor("#F5C14A"));
+                    starshipsButton.setBackgroundColor(Color.parseColor(yellowDownPress));
                     return true;
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    starshipsButton.setBackgroundColor(Color.parseColor("#E5B13A"));
+                    starshipsButton.setBackgroundColor(Color.parseColor(yellowUpPress));
                     Intent intent = new Intent(MainActivity.this, ListActivity.class);
                     intent.putExtra("ListViewType", STARSHIPS);
                     startActivity(intent);
@@ -152,10 +159,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    vehiclesButton.setBackgroundColor(Color.parseColor("#F5C14A"));
+                    vehiclesButton.setBackgroundColor(Color.parseColor(yellowDownPress));
                     return true;
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    vehiclesButton.setBackgroundColor(Color.parseColor("#E5B13A"));
+                    vehiclesButton.setBackgroundColor(Color.parseColor(yellowUpPress));
                     Intent intent = new Intent(MainActivity.this, ListActivity.class);
                     intent.putExtra("ListViewType", VEHICLES);
                     startActivity(intent);
@@ -169,10 +176,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    speciesButton.setBackgroundColor(Color.parseColor("#F5C14A"));
+                    speciesButton.setBackgroundColor(Color.parseColor(yellowDownPress));
                     return true;
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    speciesButton.setBackgroundColor(Color.parseColor("#E5B13A"));
+                    speciesButton.setBackgroundColor(Color.parseColor(yellowUpPress));
                     Intent intent = new Intent(MainActivity.this, ListActivity.class);
                     intent.putExtra("ListViewType", SPECIES);
                     startActivity(intent);

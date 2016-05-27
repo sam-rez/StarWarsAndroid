@@ -41,6 +41,7 @@ import retrofit.client.Response;
 /** Class that displays all the views for a particular category **/
 
 //TODO persist data
+//TODO alphabetize
 
 public class ListActivity extends AppCompatActivity {
 
