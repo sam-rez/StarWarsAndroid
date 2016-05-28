@@ -171,8 +171,10 @@ public class ListActivity extends AppCompatActivity {
                         intent.putExtra("diameter", planetArrayList.get(position).diameter);
                         intent.putExtra("population", planetArrayList.get(position).population);
                         intent.putExtra("rotation_period", planetArrayList.get(position).rotationPeriod);
+                        intent.putExtra("orbital_period", planetArrayList.get(position).orbitalPeriod);
                         intent.putExtra("terrain", planetArrayList.get(position).terrain);
                         intent.putExtra("gravity", planetArrayList.get(position).gravity);
+                        intent.putExtra("surface_water", planetArrayList.get(position).surfaceWater);
                         startActivity(intent);
                     }
                 });

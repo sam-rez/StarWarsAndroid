@@ -43,7 +43,7 @@ public class IndividualActivity extends AppCompatActivity{
 
         sv.addView(ll);
         ll.setOrientation(LinearLayout.VERTICAL);
-        ll.setBackgroundResource(R.drawable.stars);
+        sv.setBackgroundResource(R.drawable.background);
 
         getSupportActionBar().hide();
 
@@ -61,6 +61,8 @@ public class IndividualActivity extends AppCompatActivity{
 
     void getCategoryStats(Bundle b, String category){
 
+        String shadowColor = getRandom(colors);
+
         switch (category){
             case MainActivity.PEOPLE:
 
@@ -69,12 +71,12 @@ public class IndividualActivity extends AppCompatActivity{
                 ll.addView(people_name);
 
                 TextView people_height = new TextView(this);
-                SetTypeFacePaddingColorSize(people_height, color_people);
+                SetTypeFacePaddingColorShadowSize(people_height, color_people);
                 people_height.setText("height: " + centimeters2feet(b.getString("height")));
                 ll.addView(people_height);
 
                 TextView people_mass = new TextView(this);
-                SetTypeFacePaddingColorSize(people_mass, color_people);
+                SetTypeFacePaddingColorShadowSize(people_mass, color_people);
                 if(!b.getString("mass").equals("unknown")) {
                     String massString = b.getString("mass");
                     String mass = convertKGtoLB(massString);
@@ -85,22 +87,22 @@ public class IndividualActivity extends AppCompatActivity{
                 ll.addView(people_mass);
 
                 TextView hair_color = new TextView(this);
-                SetTypeFacePaddingColorSize(hair_color, color_people);
+                SetTypeFacePaddingColorShadowSize(hair_color, color_people);
                 hair_color.setText("hair color: " + b.getString("hair_color").toLowerCase());
                 ll.addView(hair_color);
 
                 TextView skin_color = new TextView(this);
-                SetTypeFacePaddingColorSize(skin_color, color_people);
+                SetTypeFacePaddingColorShadowSize(skin_color, color_people);
                 skin_color.setText("skin color: " + b.getString("skin_color").toLowerCase());
                 ll.addView(skin_color);
 
                 TextView birth_year = new TextView(this);
-                SetTypeFacePaddingColorSize(birth_year, color_people);
+                SetTypeFacePaddingColorShadowSize(birth_year, color_people);
                 birth_year.setText("birth year: " + b.getString("birth_year").toLowerCase());
                 ll.addView(birth_year);
 
                 TextView gender = new TextView(this);
-                SetTypeFacePaddingColorSize(gender, color_people);
+                SetTypeFacePaddingColorShadowSize(gender, color_people);
                 gender.setText("gender: " + b.getString("gender").toLowerCase());
                 ll.addView(gender);
 
@@ -108,64 +110,89 @@ public class IndividualActivity extends AppCompatActivity{
 
             case MainActivity.PLANETS:
 
-                String color_planets = getRandom(colors);
-
-                TextView planet_name = CreateTitle(color_planets, b.getString("name").toLowerCase());
+                TextView planet_name = CreateTitle(shadowColor, b.getString("name").toLowerCase());
                 ll.addView(planet_name);
 
                 TextView population = new TextView(this);
-                SetTypeFacePaddingColorSize(population, color_planets);
+                SetTypeFacePaddingColorShadowSize(population, shadowColor);
                 population.setText("population: " + b.getString("population").toLowerCase());
                 ll.addView(population);
 
                 TextView diameter = new TextView(this);
-                SetTypeFacePaddingColorSize(diameter, color_planets);
-                diameter.setText("diameter: " + b.getString("diameter").toLowerCase());
+                SetTypeFacePaddingColorShadowSize(diameter, shadowColor);
+                if(b.getString("diameter").equals("unknown")){
+                    diameter.setText("diameter: unknown");
+                }else {
+                    diameter.setText("diameter: " + b.getString("diameter").toLowerCase() + " kms");
+                }
                 ll.addView(diameter);
 
                 TextView climate = new TextView(this);
-                SetTypeFacePaddingColorSize(climate, color_planets);
+                SetTypeFacePaddingColorShadowSize(climate, shadowColor);
                 climate.setText("climate: " + b.getString("climate").toLowerCase());
                 ll.addView(climate);
 
                 TextView terrain = new TextView(this);
-                SetTypeFacePaddingColorSize(terrain, color_planets);
+                SetTypeFacePaddingColorShadowSize(terrain, shadowColor);
                 terrain.setText("terrain: " + b.getString("terrain").toLowerCase());
                 ll.addView(terrain);
 
                 TextView rotation_period = new TextView(this);
-                SetTypeFacePaddingColorSize(rotation_period, color_planets);
-                rotation_period.setText("rotation period: " + b.getString("rotation_period").toLowerCase());
+                SetTypeFacePaddingColorShadowSize(rotation_period, shadowColor);
+                if(b.getString("rotation_period").equals("unknown")){
+                    rotation_period.setText("rotation period: unknown");
+
+                }else {
+                    rotation_period.setText("rotation period: " + b.getString("rotation_period").toLowerCase() + " hours");
+                }
                 ll.addView(rotation_period);
 
+                TextView orbital_period = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(orbital_period, shadowColor);
+                if(b.getString("orbital_period").equals("unknown")){
+                    orbital_period.setText("orbital period: unknown");
+
+                }else {
+                    orbital_period.setText("orbital period: " + b.getString("orbital_period").toLowerCase() + " days");
+                }
+                ll.addView(orbital_period);
+
                 TextView gravity = new TextView(this);
-                SetTypeFacePaddingColorSize(gravity, color_planets);
+                SetTypeFacePaddingColorShadowSize(gravity, shadowColor);
                 gravity.setText("gravity: " + b.getString("gravity").toLowerCase());
                 ll.addView(gravity);
+
+                TextView surface_water = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(surface_water, shadowColor);
+                if(b.getString("surface_water").equals("unknown")) {
+                    surface_water.setText("surface water: unknown");
+                }else{
+                    surface_water.setText("surface water: " + b.getString("surface_water").toLowerCase() + " percent");
+                }
+                ll.addView(surface_water);
 
                 break;
 
             case MainActivity.FILMS:
 
-                String color_films = getRandom(colors);
 
-                TextView film_name = CreateTitle(color_films, b.getString("title").toLowerCase());
+                TextView film_name = CreateTitle(shadowColor, b.getString("title").toLowerCase());
                 ll.addView(film_name);
 
                 TextView episode = new TextView(this);
-                SetTypeFacePaddingColorSize(episode, color_films);
+                SetTypeFacePaddingColorShadowSize(episode, shadowColor);
                 int episodeInt = b.getInt("episode");
                 String episodeString = Integer.toString(episodeInt);
                 episode.setText("episode: " + episodeString);
                 ll.addView(episode);
 
                 TextView director = new TextView(this);
-                SetTypeFacePaddingColorSize(director, color_films);
+                SetTypeFacePaddingColorShadowSize(director, shadowColor);
                 director.setText("director: " + b.getString("director").toLowerCase());
                 ll.addView(director);
 
                 TextView opening_crawl = new TextView(this);
-                SetTypeFacePaddingColorSize(opening_crawl, color_films);
+                SetTypeFacePaddingColorShadowSize(opening_crawl, shadowColor);
                 opening_crawl.setTextSize(16);
                 String openingCrawl = b.getString("opening_crawl").toLowerCase();
                 opening_crawl.setText(openingCrawl);
@@ -175,71 +202,143 @@ public class IndividualActivity extends AppCompatActivity{
 
             case MainActivity.STARSHIPS:
 
-
-                String color_starships = getRandom(colors);
-
-                TextView starship_name = CreateTitle(color_starships, b.getString("name").toLowerCase());
+                TextView starship_name = CreateTitle(shadowColor, b.getString("name").toLowerCase());
                 ll.addView(starship_name);
 
                 TextView manufacturer = new TextView(this);
-                SetTypeFacePaddingColorSize(manufacturer, color_starships);
+                SetTypeFacePaddingColorShadowSize(manufacturer, shadowColor);
                 manufacturer.setText("manufacturer: " + b.getString("manufacturer").toLowerCase());
                 ll.addView(manufacturer);
 
                 TextView model = new TextView(this);
-                SetTypeFacePaddingColorSize(model, color_starships);
-                manufacturer.setText("model: " + b.getString("model").toLowerCase());
+                SetTypeFacePaddingColorShadowSize(model, shadowColor);
+                model.setText("model: " + b.getString("model").toLowerCase());
                 ll.addView(model);
 
                 TextView class_starship = new TextView(this);
-                SetTypeFacePaddingColorSize(class_starship, color_starships);
-                manufacturer.setText("class: " + b.getString("class").toLowerCase());
+                SetTypeFacePaddingColorShadowSize(class_starship, shadowColor);
+                class_starship.setText("class: " + b.getString("class").toLowerCase());
                 ll.addView(class_starship);
 
                 TextView cost = new TextView(this);
-                SetTypeFacePaddingColorSize(cost, color_starships);
-                manufacturer.setText("cost: " + b.getString("cost").toLowerCase());
+                SetTypeFacePaddingColorShadowSize(cost, shadowColor);
+                cost.setText("cost: " + b.getString("cost").toLowerCase());
                 ll.addView(cost);
 
                 TextView length = new TextView(this);
-                SetTypeFacePaddingColorSize(length, color_starships);
-                manufacturer.setText("length: " + b.getString("length").toLowerCase());
+                SetTypeFacePaddingColorShadowSize(length, shadowColor);
+                length.setText("length: " + b.getString("length").toLowerCase());
                 ll.addView(length);
 
-//                intent.putExtra("cost", starshipArrayList.get(position).costInCredits);
-//                intent.putExtra("length", starshipArrayList.get(position).length);
-//                intent.putExtra("crew", starshipArrayList.get(position).crew);
-//                intent.putExtra("passengers", starshipArrayList.get(position).passengers);
-//                intent.putExtra("speed", starshipArrayList.get(position).maxAtmospheringSpeed);
-//                intent.putExtra("consumables", starshipArrayList.get(position).consumables);
+                TextView crew = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(crew, shadowColor);
+                crew.setText("crew size: " + b.getString("crew").toLowerCase());
+                ll.addView(crew);
+
+                TextView passengers = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(passengers, shadowColor);
+                passengers.setText("passenger capacity: " + b.getString("passengers").toLowerCase());
+                ll.addView(passengers);
+
+                TextView speed = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(speed, shadowColor);
+                speed.setText("speed: " + b.getString("speed").toLowerCase());
+                ll.addView(speed);
+
+                TextView consumables = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(consumables, shadowColor);
+                consumables.setText("consumables: " + b.getString("consumables").toLowerCase());
+                ll.addView(consumables);
 
                 break;
 
             case MainActivity.VEHICLES:
 
-//                intent.putExtra("ListViewType", MainActivity.VEHICLES);
-//                intent.putExtra("name", vehicleArrayList.get(position).name);
-//                intent.putExtra("manufacturer", vehicleArrayList.get(position).manufacturer);
-//                intent.putExtra("class", vehicleArrayList.get(position).vehicleClass);
-//                intent.putExtra("length", vehicleArrayList.get(position).length);
-//                intent.putExtra("cost", vehicleArrayList.get(position).costInCredits);
-//                intent.putExtra("crew", vehicleArrayList.get(position).crew);
-//                intent.putExtra("passengers", vehicleArrayList.get(position).passengers);
-//                intent.putExtra("consumables", vehicleArrayList.get(position).consumables);
+                TextView vehicle_name = CreateTitle(shadowColor, b.getString("name").toLowerCase());
+                ll.addView(vehicle_name);
+
+                TextView manufacturer_vehicle = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(manufacturer_vehicle, shadowColor);
+                manufacturer_vehicle.setText("manufacturer: " + b.getString("manufacturer").toLowerCase());
+                ll.addView(manufacturer_vehicle);
+
+                TextView class_vehicle = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(class_vehicle, shadowColor);
+                class_vehicle.setText("class: " + b.getString("class").toLowerCase());
+                ll.addView(class_vehicle);
+
+                TextView cost_vehicle = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(cost_vehicle, shadowColor);
+                cost_vehicle.setText("cost: " + b.getString("cost").toLowerCase());
+                ll.addView(cost_vehicle);
+
+                TextView length_vehicle = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(length_vehicle, shadowColor);
+                length_vehicle.setText("length: " + b.getString("length").toLowerCase());
+                ll.addView(length_vehicle);
+
+                TextView crew_vehicle = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(crew_vehicle, shadowColor);
+                crew_vehicle.setText("crew size: " + b.getString("crew").toLowerCase());
+                ll.addView(crew_vehicle);
+
+                TextView passengers_vehicle = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(passengers_vehicle, shadowColor);
+                passengers_vehicle.setText("passenger capacity: " + b.getString("passengers").toLowerCase());
+                ll.addView(passengers_vehicle);
+
+                TextView consumables_vehicle = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(consumables_vehicle, shadowColor);
+                consumables_vehicle.setText("consumables: " + b.getString("consumables").toLowerCase());
+                ll.addView(consumables_vehicle);
 
                 break;
 
             case MainActivity.SPECIES:
 
-//                intent.putExtra("name", speciesArrayList.get(position).name);
-//                intent.putExtra("classification", speciesArrayList.get(position).classification);
-//                intent.putExtra("designation", speciesArrayList.get(position).designation);
-//                intent.putExtra("average_height", speciesArrayList.get(position).averageHeight);
-//                intent.putExtra("average_lifespan", speciesArrayList.get(position).averageLifespan);
-//                intent.putExtra("eye_colors", speciesArrayList.get(position).eyeColors);
-//                intent.putExtra("hair_colors", speciesArrayList.get(position).hairColors);
-//                intent.putExtra("skin_colors", speciesArrayList.get(position).skinColors);
-//                intent.putExtra("language", speciesArrayList.get(position).language);
+                TextView species_name = CreateTitle(shadowColor, b.getString("name").toLowerCase());
+                ll.addView(species_name);
+
+                TextView classification = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(classification, shadowColor);
+                classification.setText("classification: " + b.getString("classification").toLowerCase());
+                ll.addView(classification);
+
+                TextView designation = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(designation, shadowColor);
+                designation.setText("designation: " + b.getString("designation").toLowerCase());
+                ll.addView(designation);
+
+                TextView average_height = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(average_height, shadowColor);
+                String heightInFeet = centimeters2feet(b.getString("average_height"));
+                average_height.setText("average height: " + heightInFeet);
+                ll.addView(average_height);
+
+                TextView average_lifespan = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(average_lifespan, shadowColor);
+                average_lifespan.setText("average lifespan: " + b.getString("average_lifespan").toLowerCase());
+                ll.addView(average_lifespan);
+
+                TextView languages = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(languages, shadowColor);
+                languages.setText("languages: " + b.getString("language").toLowerCase());
+                ll.addView(languages);
+
+                TextView eye_colors = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(eye_colors, shadowColor);
+                eye_colors.setText("eye colors: " + b.getString("eye_colors").toLowerCase());
+                ll.addView(eye_colors);
+
+                TextView hair_colors = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(hair_colors, shadowColor);
+                hair_colors.setText("hair colors: " + b.getString("hair_colors").toLowerCase());
+                ll.addView(hair_colors);
+
+                TextView skin_colors = new TextView(this);
+                SetTypeFacePaddingColorShadowSize(skin_colors, shadowColor);
+                skin_colors.setText("skin colors: " + b.getString("skin_colors").toLowerCase());
+                ll.addView(skin_colors);
 
                 break;
 
@@ -268,7 +367,7 @@ public class IndividualActivity extends AppCompatActivity{
 
     private String centimeters2feet(String centimeters){
 
-        if(!centimeters.equals("unknown")){
+        if(!centimeters.equals("unknown") && !centimeters.equals("n/a")){
             double cm = Double.parseDouble(centimeters);
 
             int totalInches = (int)(cm/2.54);
@@ -278,12 +377,13 @@ public class IndividualActivity extends AppCompatActivity{
 
             String height = feet + "'" + inches + "\"";
             return height;
-        }else{
+        }else if (centimeters.equals("unknown")){
             return "unknown";
-        }
+        }else
+            return "\nn/a";
     }
 
-    private TextView CreateTitle(String color, String name){
+    private TextView CreateTitle(String shadow_color, String name){
 
         TextView title = new TextView(this);
         title.setAllCaps(false);
@@ -291,19 +391,19 @@ public class IndividualActivity extends AppCompatActivity{
         title.setGravity(Gravity.CENTER_HORIZONTAL);
         title.setPadding(0, 48, 0, 24);
         title.setTextColor(Color.WHITE);
-        title.setShadowLayer(40,0,0,Color.parseColor(color));
+        title.setShadowLayer(20,0,0,Color.parseColor(shadow_color));
         title.setText(name);
         title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
 
         return title;
     }
 
-    private void SetTypeFacePaddingColorSize(TextView textView, String color){
+    private void SetTypeFacePaddingColorShadowSize(TextView textView, String shadowColor){
 
         textView.setPadding(PADDING_LEFT, 0, PADDING_RIGHT, 0);
         textView.setTypeface(font);
         textView.setTextColor(Color.WHITE);
-        textView.setShadowLayer(40,0,0,Color.parseColor(color));
+        textView.setShadowLayer(20,0,0,Color.parseColor(shadowColor));
         textView.setTextSize(FONT_SIZE);
 
     }
