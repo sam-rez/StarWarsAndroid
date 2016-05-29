@@ -19,10 +19,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by Sam on 5/17/16.
- */
-
 public class IndividualActivity extends AppCompatActivity{
 
     ScrollView sv;
@@ -67,7 +63,8 @@ public class IndividualActivity extends AppCompatActivity{
             case MainActivity.PEOPLE:
 
                 String color_people = getRandom(colors);
-                TextView people_name = CreateTitle(color_people, b.getString("name").toLowerCase());
+                String peopleName = b.getString("name").toLowerCase();
+                TextView people_name = CreateTitle(color_people, peopleName);
                 ll.addView(people_name);
 
                 TextView people_height = new TextView(this);
@@ -222,12 +219,20 @@ public class IndividualActivity extends AppCompatActivity{
 
                 TextView cost = new TextView(this);
                 SetTypeFacePaddingColorShadowSize(cost, shadowColor);
-                cost.setText("cost: " + b.getString("cost").toLowerCase());
+                if(b.getString("cost").equals("unknown")){
+                    cost.setText("cost: unknown");
+                }else {
+                    cost.setText("cost: " + b.getString("cost").toLowerCase() + " galactic credits");
+                }
                 ll.addView(cost);
 
                 TextView length = new TextView(this);
                 SetTypeFacePaddingColorShadowSize(length, shadowColor);
-                length.setText("length: " + b.getString("length").toLowerCase());
+                if(b.getString("length").equals("unknown")){
+                    length.setText("length: unknown");
+                }else {
+                    length.setText("length: " + b.getString("length").toLowerCase() + " meters");
+                }
                 ll.addView(length);
 
                 TextView crew = new TextView(this);
@@ -242,7 +247,11 @@ public class IndividualActivity extends AppCompatActivity{
 
                 TextView speed = new TextView(this);
                 SetTypeFacePaddingColorShadowSize(speed, shadowColor);
-                speed.setText("speed: " + b.getString("speed").toLowerCase());
+                if(b.getString("speed").equals("unknown")){
+                    speed.setText("max speed: n/a");
+                }else {
+                    speed.setText("max speed: " + b.getString("speed").toLowerCase() + " kms");
+                }
                 ll.addView(speed);
 
                 TextView consumables = new TextView(this);
@@ -269,12 +278,20 @@ public class IndividualActivity extends AppCompatActivity{
 
                 TextView cost_vehicle = new TextView(this);
                 SetTypeFacePaddingColorShadowSize(cost_vehicle, shadowColor);
-                cost_vehicle.setText("cost: " + b.getString("cost").toLowerCase());
+                if(b.getString("cost").equals("unknown")){
+                    cost_vehicle.setText("cost: unknown");
+                }else {
+                    cost_vehicle.setText("cost: " + b.getString("cost").toLowerCase() + " galactic credits");
+                }
                 ll.addView(cost_vehicle);
 
                 TextView length_vehicle = new TextView(this);
                 SetTypeFacePaddingColorShadowSize(length_vehicle, shadowColor);
-                length_vehicle.setText("length: " + b.getString("length").toLowerCase());
+                if(b.getString("length").equals("unknown")){
+                    length_vehicle.setText("length: unknown");
+                }else {
+                    length_vehicle.setText("length: " + b.getString("length").toLowerCase() + " meters");
+                }
                 ll.addView(length_vehicle);
 
                 TextView crew_vehicle = new TextView(this);
@@ -317,7 +334,13 @@ public class IndividualActivity extends AppCompatActivity{
 
                 TextView average_lifespan = new TextView(this);
                 SetTypeFacePaddingColorShadowSize(average_lifespan, shadowColor);
-                average_lifespan.setText("average lifespan: " + b.getString("average_lifespan").toLowerCase());
+                if(b.getString("average_lifespan").equals("unknown")){
+                    average_lifespan.setText("average lifespan: unknown");
+                }else if(b.getString("average_lifespan").equals("indefinite")){
+                    average_lifespan.setText("average lifespan: indefinite");
+                }else {
+                    average_lifespan.setText("average lifespan: " + b.getString("average_lifespan").toLowerCase() + " years");
+                }
                 ll.addView(average_lifespan);
 
                 TextView languages = new TextView(this);

@@ -24,7 +24,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:orientation="vertical">
 
@@ -36,8 +36,11 @@
             android:text="people"
             android:background="#E5B13A"
             android:layout_marginBottom="4dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_weight="1"
+            android:alpha=".85"
+            android:textSize="24sp"/>
 
         <Button
             android:id="@+id/getPlanetsButton"
@@ -47,8 +50,11 @@
             android:text="planets"
             android:background="#E5B13A"
             android:layout_marginBottom="4dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_weight="1"
+            android:alpha=".85"
+            android:textSize="24sp"/>
 
         <Button
             android:id="@+id/getFilmsButton"
@@ -58,8 +64,11 @@
             android:text="films"
             android:background="#E5B13A"
             android:layout_marginBottom="4dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_weight="1"
+            android:alpha=".85"
+            android:textSize="24sp"/>
 
         <Button
             android:id="@+id/getStarshipsButton"
@@ -69,8 +78,11 @@
             android:text="starships"
             android:background="#E5B13A"
             android:layout_marginBottom="4dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_weight="1"
+            android:alpha=".85"
+            android:textSize="24sp"/>
 
         <Button
             android:id="@+id/getVehiclesButton"
@@ -80,8 +92,11 @@
             android:text="vehicles"
             android:background="#E5B13A"
             android:layout_marginBottom="4dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_weight="1"
+            android:alpha=".85"
+            android:textSize="24sp"/>
 
         <Button
             android:id="@+id/getSpeciesButton"
@@ -90,8 +105,11 @@
             android:textAllCaps="false"
             android:text="species"
             android:background="#E5B13A"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_weight="1"
+            android:alpha=".85"
+            android:textSize="24sp"/>
 
     </LinearLayout>
 

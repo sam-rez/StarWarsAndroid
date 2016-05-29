@@ -31,7 +31,9 @@ import com.swapi.sw.StarWarsApi;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -118,7 +120,9 @@ public class ListActivity extends AppCompatActivity {
         StarWars api = StarWarsApi.getApi();
 
         switch (category) {
+
             case MainActivity.PEOPLE:
+
                 title.setText(category);
                 m_vwPeopleLayout = (ListView) findViewById(R.id.ItemListViewGroup);
                 m_vwPeopleLayout.setAdapter(m_peopleAdapter);
@@ -138,23 +142,54 @@ public class ListActivity extends AppCompatActivity {
                     }
                 });
                 progress = ProgressDialog.show(this, "Loading", "Loading", true);
-                for(int i = 1; i < 10; i++) {
-                    api.getAllPeople(i, new Callback<SWModelList<People>>() {
-                        @Override
-                        public void success(SWModelList<People> planetSWModelList, Response response) {
-                            for (People p : planetSWModelList.results) {
-                                peopleArrayList.add(p);
-                                System.out.println(p.name);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("sp", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                //editor.clear();
+                //editor.commit();
+
+                //if(!sharedPreferences.contains("people_array_list")) {
+
+                    for (int i = 1; i < 10; i++) {
+                        api.getAllPeople(i, new Callback<SWModelList<People>>() {
+                            @Override
+                            public void success(SWModelList<People> planetSWModelList, Response response) {
+
+                                for (People p : planetSWModelList.results) {
+                                    peopleArrayList.add(p);
+                                    System.out.println(p.name);
+                                }
+                                progress.dismiss();
+                                m_peopleAdapter.notifyDataSetChanged();
                             }
-                            progress.dismiss();
-                            m_peopleAdapter.notifyDataSetChanged();
-                        }
-                        @Override
-                        public void failure(RetrofitError error) {
-                            System.out.print("failure");
-                        }
-                    });
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                System.out.print("failure");
+                            }
+                        });
+                    //}
+
+                    Gson gson = new Gson();
+                    String jsonPeople = gson.toJson(peopleArrayList);
+                    editor.putString("people_array_list", jsonPeople);
+                    editor.commit();
                 }
+//                else{
+//
+//
+//
+//                    Gson gson = new Gson();
+//                    String json = sharedPreferences.getString("people_array_list", null);
+//                    Type type = new TypeToken<ArrayList<People>>(){}.getType();
+//                    peopleArrayList = gson.fromJson(json, type);
+//
+//                    progress.dismiss();
+//                    m_peopleAdapter.notifyDataSetChanged();
+//
+//                }
+
                 break;
 
             case MainActivity.PLANETS:
