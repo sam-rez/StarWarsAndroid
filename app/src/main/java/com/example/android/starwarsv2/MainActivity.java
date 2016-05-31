@@ -26,7 +26,6 @@ import retrofit.client.Response;
 
 /** People, Planets, Films, Starships, Vehicles, and Species **/
 
-//TODO scrollview buttons
 
 public class MainActivity extends AppCompatActivity {
 

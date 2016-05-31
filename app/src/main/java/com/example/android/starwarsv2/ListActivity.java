@@ -31,6 +31,8 @@ import com.swapi.sw.StarWarsApi;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,7 +45,6 @@ import retrofit.client.Response;
 /** Class that displays all the views for a particular category **/
 
 //TODO persist data
-//TODO alphabetize
 
 public class ListActivity extends AppCompatActivity {
 
@@ -66,6 +67,7 @@ public class ListActivity extends AppCompatActivity {
     /** Used to get items from API call. Respective adapters will copy from arraylist
        to their local arraylist **/
     protected ArrayList<People> peopleArrayList;
+    protected ArrayList<People> peoplePreSortedList;
     protected ArrayList<Planet> planetArrayList;
     protected ArrayList<Film> filmArrayList;
     protected ArrayList<Starship> starshipArrayList;
@@ -81,6 +83,8 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         peopleArrayList = new ArrayList<>();
+        peoplePreSortedList = new ArrayList<>();
+
         planetArrayList = new ArrayList<>();
         filmArrayList = new ArrayList<>();
         starshipArrayList = new ArrayList<>();
@@ -108,6 +112,8 @@ public class ListActivity extends AppCompatActivity {
         }
 
         getItems(category);
+
+
     }
 
     protected void initLayout(){
@@ -143,8 +149,9 @@ public class ListActivity extends AppCompatActivity {
                 });
                 progress = ProgressDialog.show(this, "Loading", "Loading", true);
 
-                SharedPreferences sharedPreferences = getSharedPreferences("sp", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                //SharedPreferences sharedPreferences = getSharedPreferences("sp", MODE_PRIVATE);
+                //SharedPreferences.Editor editor = sharedPreferences.edit();
 
                 //editor.clear();
                 //editor.commit();
@@ -159,8 +166,10 @@ public class ListActivity extends AppCompatActivity {
                                 for (People p : planetSWModelList.results) {
                                     peopleArrayList.add(p);
                                     System.out.println(p.name);
+
                                 }
                                 progress.dismiss();
+                                peopleArrayList = sortArrayList(peopleArrayList);
                                 m_peopleAdapter.notifyDataSetChanged();
                             }
 
@@ -169,13 +178,13 @@ public class ListActivity extends AppCompatActivity {
                                 System.out.print("failure");
                             }
                         });
-                    //}
+                    }
 
-                    Gson gson = new Gson();
-                    String jsonPeople = gson.toJson(peopleArrayList);
-                    editor.putString("people_array_list", jsonPeople);
-                    editor.commit();
-                }
+//                    Gson gson = new Gson();
+//                    String jsonPeople = gson.toJson(peopleArrayList);
+//                    editor.putString("people_array_list", jsonPeople);
+//                    editor.commit();
+                //}
 //                else{
 //
 //
@@ -418,6 +427,18 @@ public class ListActivity extends AppCompatActivity {
         ArrayList<People> arrayList = gson.fromJson(json, type);
         return arrayList;
 
+    }
+
+    private ArrayList<People> sortArrayList(ArrayList<People> arrayList){
+
+        for(int i = 0; i < arrayList.size(); i++){
+            for(int j = 0; j < arrayList.size(); j++){
+                if(arrayList.get(i).name.compareTo(arrayList.get(j).name) < 0){
+                    Collections.swap(arrayList, i, j);
+                }
+            }
+        }
+        return arrayList;
     }
 
 }
