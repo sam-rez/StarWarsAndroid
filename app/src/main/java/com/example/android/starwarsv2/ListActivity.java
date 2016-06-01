@@ -44,7 +44,8 @@ import retrofit.client.Response;
 /** Planets, Starships, Vehicles, People, Films and Species **/
 /** Class that displays all the views for a particular category **/
 
-//TODO persist data
+//TODO save arraylist size
+//TODO set expiration date
 
 public class ListActivity extends AppCompatActivity {
 
@@ -149,16 +150,18 @@ public class ListActivity extends AppCompatActivity {
                 });
                 progress = ProgressDialog.show(this, "Loading", "Loading", true);
 
+//                SharedPreferences sharedPreferences = getSharedPreferences("sp", MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.clear().commit();
 
-                //SharedPreferences sharedPreferences = getSharedPreferences("sp", MODE_PRIVATE);
-                //SharedPreferences.Editor editor = sharedPreferences.edit();
+                for (int i = 1; i < 10; i++) {
 
-                //editor.clear();
-                //editor.commit();
+                    //check if should save or get arraylist
+                    SharedPreferences sp = getSharedPreferences("sp", MODE_PRIVATE);
 
-                //if(!sharedPreferences.contains("people_array_list")) {
+                    if(!sp.contains("people_array_list" + i)) {
 
-                    for (int i = 1; i < 10; i++) {
+                        final int iFinal = i;
                         api.getAllPeople(i, new Callback<SWModelList<People>>() {
                             @Override
                             public void success(SWModelList<People> planetSWModelList, Response response) {
@@ -168,9 +171,20 @@ public class ListActivity extends AppCompatActivity {
                                     System.out.println(p.name);
 
                                 }
-                                progress.dismiss();
                                 peopleArrayList = sortArrayList(peopleArrayList);
                                 m_peopleAdapter.notifyDataSetChanged();
+
+                                //save arraylist to sharedPreferences
+                                SharedPreferences sharedPreferences = getSharedPreferences("sp", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                                Gson gson = new Gson();
+                                String jsonPeople = gson.toJson(peopleArrayList);
+                                editor.putString("people_array_list" + iFinal, jsonPeople);
+                                editor.commit();
+
+                                progress.dismiss();
+                                Log.d("SIZE", "success: "+ peopleArrayList.size());
                             }
 
                             @Override
@@ -178,26 +192,26 @@ public class ListActivity extends AppCompatActivity {
                                 System.out.print("failure");
                             }
                         });
-                    }
+                    }else{
 
-//                    Gson gson = new Gson();
-//                    String jsonPeople = gson.toJson(peopleArrayList);
-//                    editor.putString("people_array_list", jsonPeople);
-//                    editor.commit();
-                //}
-//                else{
-//
-//
-//
-//                    Gson gson = new Gson();
-//                    String json = sharedPreferences.getString("people_array_list", null);
-//                    Type type = new TypeToken<ArrayList<People>>(){}.getType();
-//                    peopleArrayList = gson.fromJson(json, type);
-//
-//                    progress.dismiss();
-//                    m_peopleAdapter.notifyDataSetChanged();
-//
-//                }
+                        Gson gson = new Gson();
+                        String json = sp.getString("people_array_list" + i, null);
+                        Type type = new TypeToken<ArrayList<People>>(){}.getType();
+
+                        ArrayList<People> peopleArrayList2 = new ArrayList<>();
+                        peopleArrayList2 = gson.fromJson(json, type);
+
+                        progress.dismiss();
+                        if(peopleArrayList2.size() == 87) {
+                            for(People p: peopleArrayList2){
+                                peopleArrayList.add(p);
+                               //m_peopleAdapter.notifyDataSetChanged();
+                            }
+
+                            m_peopleAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
 
                 break;
 
@@ -405,29 +419,6 @@ public class ListActivity extends AppCompatActivity {
         }
     }
 
-    private void savePeopleArrayList(ArrayList<People> arrayList){
-
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-        Gson gson = new Gson();
-
-        String json = gson.toJson(arrayList);
-
-        editor.putString("PeopleArrayList", json);
-        editor.commit();
-
-    }
-
-    private ArrayList<People> getPeopleArrayList(){
-
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Gson gson = new Gson();
-        String json = sharedPrefs.getString("PeopleArrayList", null);
-        Type type = new TypeToken<ArrayList<People>>() {}.getType();
-        ArrayList<People> arrayList = gson.fromJson(json, type);
-        return arrayList;
-
-    }
 
     private ArrayList<People> sortArrayList(ArrayList<People> arrayList){
 
