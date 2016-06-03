@@ -1,4 +1,4 @@
-package com.example.android.starwarsv2;
+package com.samrezaie.android.starwarsv2;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

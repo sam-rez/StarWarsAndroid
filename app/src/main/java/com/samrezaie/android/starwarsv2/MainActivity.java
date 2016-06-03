@@ -1,27 +1,14 @@
-package com.example.android.starwarsv2;
+package com.samrezaie.android.starwarsv2;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.renderscript.Type;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.swapi.models.Film;
-import com.swapi.models.People;
-import com.swapi.models.Planet;
-import com.swapi.models.SWModelList;
-import com.swapi.sw.StarWarsApi;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 
 /** People, Planets, Films, Starships, Vehicles, and Species **/

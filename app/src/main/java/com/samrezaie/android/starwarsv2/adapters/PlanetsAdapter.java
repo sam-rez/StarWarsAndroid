@@ -1,11 +1,11 @@
-package com.example.android.starwarsv2.adapters;
+package com.samrezaie.android.starwarsv2.adapters;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.example.android.starwarsv2.ItemView;
+import com.samrezaie.android.starwarsv2.ItemView;
 import com.swapi.models.Planet;
 
 import java.util.List;

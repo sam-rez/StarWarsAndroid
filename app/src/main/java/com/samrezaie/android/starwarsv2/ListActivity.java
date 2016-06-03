@@ -1,22 +1,18 @@
-package com.example.android.starwarsv2;
+package com.samrezaie.android.starwarsv2;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.SystemClock;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.android.starwarsv2.adapters.*;
+import com.samrezaie.android.starwarsv2.adapters.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.swapi.models.Film;
@@ -32,10 +28,6 @@ import com.swapi.sw.StarWarsApi;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -43,9 +35,6 @@ import retrofit.client.Response;
 
 /** Planets, Starships, Vehicles, People, Films and Species **/
 /** Class that displays all the views for a particular category **/
-
-//TODO save arraylist size
-//TODO set expiration date
 
 public class ListActivity extends AppCompatActivity {
 
@@ -77,6 +66,8 @@ public class ListActivity extends AppCompatActivity {
 
     protected TextView title;
     ProgressDialog progress;
+
+    protected int numPeople, numPlanets, numFilms, numStarships, numVehicles, numSpecies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,34 +148,37 @@ public class ListActivity extends AppCompatActivity {
                 for (int i = 1; i < 10; i++) {
 
                     //check if should save or get arraylist
-                    SharedPreferences sp = getSharedPreferences("sp", MODE_PRIVATE);
+                    SharedPreferences spPeople = getSharedPreferences("sp", MODE_PRIVATE);
 
-                    if(!sp.contains("people_array_list" + i)) {
+                    if(!spPeople.contains("people_array_list" + i)) {
 
                         final int iFinal = i;
                         api.getAllPeople(i, new Callback<SWModelList<People>>() {
                             @Override
-                            public void success(SWModelList<People> planetSWModelList, Response response) {
+                            public void success(SWModelList<People> peopleSWModelList, Response response) {
 
-                                for (People p : planetSWModelList.results) {
+                                for (People p : peopleSWModelList.results) {
                                     peopleArrayList.add(p);
-                                    System.out.println(p.name);
 
                                 }
-                                peopleArrayList = sortArrayList(peopleArrayList);
-                                m_peopleAdapter.notifyDataSetChanged();
-
                                 //save arraylist to sharedPreferences
                                 SharedPreferences sharedPreferences = getSharedPreferences("sp", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
+                                if(peopleArrayList.size() > numPeople){
+                                    numPeople = peopleArrayList.size();
+                                    editor.putInt("numPeople", numPeople);
+                                }
+
+                                peopleArrayList = sortPeopleArrayList(peopleArrayList);
+                                m_peopleAdapter.notifyDataSetChanged();
+
                                 Gson gson = new Gson();
-                                String jsonPeople = gson.toJson(peopleArrayList);
-                                editor.putString("people_array_list" + iFinal, jsonPeople);
+                                String json = gson.toJson(peopleArrayList);
+                                editor.putString("people_array_list" + iFinal, json);
                                 editor.commit();
 
                                 progress.dismiss();
-                                Log.d("SIZE", "success: "+ peopleArrayList.size());
                             }
 
                             @Override
@@ -195,23 +189,21 @@ public class ListActivity extends AppCompatActivity {
                     }else{
 
                         Gson gson = new Gson();
-                        String json = sp.getString("people_array_list" + i, null);
+                        String json = spPeople.getString("people_array_list" + i, null);
                         Type type = new TypeToken<ArrayList<People>>(){}.getType();
 
-                        ArrayList<People> peopleArrayList2 = new ArrayList<>();
-                        peopleArrayList2 = gson.fromJson(json, type);
-
+                        ArrayList<People> peopleArrayList2 = gson.fromJson(json, type);
                         progress.dismiss();
-                        if(peopleArrayList2.size() == 87) {
+
+                        if(peopleArrayList2.size() == spPeople.getInt("numPeople", numPeople)) {
                             for(People p: peopleArrayList2){
                                 peopleArrayList.add(p);
-                               //m_peopleAdapter.notifyDataSetChanged();
                             }
-
                             m_peopleAdapter.notifyDataSetChanged();
                         }
-                    }
-                }
+
+                    }//end if-else
+                }//end for
 
                 break;
 
@@ -237,27 +229,66 @@ public class ListActivity extends AppCompatActivity {
                     }
                 });
                 progress = ProgressDialog.show(this, "Loading", "Loading", true);
+
                 for(int i = 1; i < 8; i++) {
-                    api.getAllPlanets(i, new Callback<SWModelList<Planet>>() {
-                        @Override
-                        public void success(SWModelList<Planet> planetSWModelList, Response response) {
-                            for (Planet p : planetSWModelList.results) {
-                                planetArrayList.add(p);
-                                System.out.println(p.name);
+
+                    //check if should save or get arraylist
+                    SharedPreferences spPlanets = getSharedPreferences("sp", MODE_PRIVATE);
+
+                    if(!spPlanets.contains("planet_array_list"+ i)) {
+
+                        final int iFinal = i;
+                        api.getAllPlanets(i, new Callback<SWModelList<Planet>>() {
+                            @Override
+                            public void success(SWModelList<Planet> planetSWModelList, Response response) {
+
+                                for (Planet p : planetSWModelList.results) {
+                                    planetArrayList.add(p);
+                                }
+                                //save arraylist to sharedPreferences
+                                SharedPreferences sharedPreferences = getSharedPreferences("sp", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                                if(planetArrayList.size() > numPlanets){
+                                    numPlanets = planetArrayList.size();
+                                    editor.putInt("numPlanets", numPlanets);
+                                }
+
+                                planetArrayList = sortPlanetArrayList(planetArrayList);
+                                m_planetsAdapter.notifyDataSetChanged();
+
+                                Gson gson = new Gson();
+                                String json = gson.toJson(planetArrayList);
+                                editor.putString("planet_array_list" + iFinal, json);
+                                editor.commit();
+                                progress.dismiss();
                             }
-                            progress.dismiss();
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                System.out.print("failure");
+                            }
+                        });
+                    }else{
+                        Gson gson = new Gson();
+                        String json = spPlanets.getString("planet_array_list" + i, null);
+                        Type type = new TypeToken<ArrayList<Planet>>(){}.getType();
+
+                        ArrayList<Planet> planetArrayList2 = gson.fromJson(json, type);
+                        progress.dismiss();
+
+                        if(planetArrayList2.size() == spPlanets.getInt("numPlanets", numPlanets)) {
+                            for(Planet p: planetArrayList2){
+                                planetArrayList.add(p);
+                            }
                             m_planetsAdapter.notifyDataSetChanged();
                         }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-                            System.out.print("failure");
-                        }
-                    });
-                }
+                    }//end if-else
+                }//end for
                 break;
 
             case MainActivity.FILMS:
+
                 title.setText(category);
                 m_vwFilmsLayout = (ListView)findViewById(R.id.ItemListViewGroup);
                 m_vwFilmsLayout.setAdapter(m_filmsAdapter);
@@ -273,21 +304,54 @@ public class ListActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+
                 progress = ProgressDialog.show(this, "Loading", "Loading", true);
-                api.getAllFilms(1, new Callback<SWModelList<Film>>() {
-                    @Override
-                    public void success(SWModelList<Film> filmSWModelList, Response response) {
-                        System.out.println("Count:"+ filmSWModelList.count);
-                        for(Film f : filmSWModelList.results) {
-                            filmArrayList.add(f);
+
+                SharedPreferences spFilms = getSharedPreferences("sp", MODE_PRIVATE);
+
+                if(!spFilms.contains("film_array_list")) {
+
+                    api.getAllFilms(1, new Callback<SWModelList<Film>>() {
+                        @Override
+                        public void success(SWModelList<Film> filmSWModelList, Response response) {
+
+                            for (Film f : filmSWModelList.results) {
+                                filmArrayList.add(f);
+                            }
+
+                            //save arraylist to sharedPreferences
+                            SharedPreferences sharedPreferences = getSharedPreferences("sp", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                            filmArrayList = sortFilmArrayList(filmArrayList);
+                            m_filmsAdapter.notifyDataSetChanged();
+
+                            Gson gson = new Gson();
+                            String json = gson.toJson(filmArrayList);
+                            editor.putString("film_array_list", json);
+                            editor.commit();
+
+                            progress.dismiss();
                         }
-                        progress.dismiss();
-                        m_filmsAdapter.notifyDataSetChanged();
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                        }
+                    });
+
+                }else{
+                    Gson gson = new Gson();
+                    String json = spFilms.getString("film_array_list", null);
+                    Type type = new TypeToken<ArrayList<Film>>(){}.getType();
+
+                    ArrayList<Film> filmArrayList2 = gson.fromJson(json, type);
+                    progress.dismiss();
+
+                    for(Film f: filmArrayList2){
+                        filmArrayList.add(f);
                     }
-                    @Override
-                    public void failure(RetrofitError error) {
-                    }
-                });
+                    m_filmsAdapter.notifyDataSetChanged();
+                }
                 break;
 
             case MainActivity.STARSHIPS:
@@ -313,25 +377,66 @@ public class ListActivity extends AppCompatActivity {
                     }
                 });
                 progress = ProgressDialog.show(this, "Loading", "Loading", true);
+
                 for(int i = 1; i < 5; i++) {
-                    api.getAllStarships(i, new Callback<SWModelList<Starship>>() {
-                        @Override
-                        public void success(SWModelList<Starship> starshipSWModelList, Response response) {
-                            System.out.println("Count:" + starshipSWModelList.count);
-                            for (Starship s : starshipSWModelList.results) {
-                                starshipArrayList.add(s);
-                                System.out.println(s.name);
 
+                    //check if should save or get arraylist
+                    SharedPreferences spStarships = getSharedPreferences("sp", MODE_PRIVATE);
+
+                    if(!spStarships.contains("starship_array_list" + 1)) {
+
+                        final int iFinal = i;
+                        api.getAllStarships(i, new Callback<SWModelList<Starship>>() {
+                            @Override
+                            public void success(SWModelList<Starship> starshipSWModelList, Response response) {
+                                System.out.println("Count:" + starshipSWModelList.count);
+                                for (Starship s : starshipSWModelList.results) {
+                                    starshipArrayList.add(s);
+                                }
+                                //save arraylist to sharedPreferences
+                                SharedPreferences sharedPreferences = getSharedPreferences("sp", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                                if(starshipArrayList.size() > numStarships){
+                                    numStarships = starshipArrayList.size();
+                                    editor.putInt("numStarships", numStarships);
+                                }
+
+                                starshipArrayList = sortStarshipArrayList(starshipArrayList);
+                                m_starshipsAdapter.notifyDataSetChanged();
+
+                                Gson gson = new Gson();
+                                String json = gson.toJson(starshipArrayList);
+                                editor.putString("starship_array_list" + iFinal, json);
+                                editor.commit();
+
+                                progress.dismiss();
                             }
-                            progress.dismiss();
-                            m_starshipsAdapter.notifyDataSetChanged();
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                            }
+                        });
+                    }else{
+
+                        Gson gson = new Gson();
+                        String json = spStarships.getString("starship_array_list" + i, null);
+                        Type type = new TypeToken<ArrayList<Starship>>(){}.getType();
+
+                        ArrayList<Starship> starshipArrayList2 = gson.fromJson(json, type);
+                        progress.dismiss();
+
+                        if(starshipArrayList2.size() == spStarships.getInt("numStarships", numStarships)) {
+                            for(Starship s: starshipArrayList2){
+                                starshipArrayList.add(s);
+                            }
+                            m_peopleAdapter.notifyDataSetChanged();
                         }
 
-                        @Override
-                        public void failure(RetrofitError error) {
-                        }
-                    });
-                }
+                    }//end if-else
+
+                }//end for
+
                 break;
 
             case MainActivity.VEHICLES:
@@ -355,26 +460,69 @@ public class ListActivity extends AppCompatActivity {
                     }
                 });
                 progress = ProgressDialog.show(this, "Loading", "Loading", true);
+
                 for(int i = 1; i < 5; i++) {
-                    api.getAllVehicles(i, new Callback<SWModelList<Vehicle>>() {
-                        @Override
-                        public void success(SWModelList<Vehicle> vehicleSWModelList, Response response) {
-                            System.out.println("Count:" + vehicleSWModelList.count);
-                            for (Vehicle v : vehicleSWModelList.results) {
+
+                    //check if should save or get arraylist
+                    SharedPreferences spVehicles = getSharedPreferences("sp", MODE_PRIVATE);
+
+                    if(!spVehicles.contains("vehicle_array_list" + i)) {
+
+                        final int iFinal = i;
+                        api.getAllVehicles(i, new Callback<SWModelList<Vehicle>>() {
+                            @Override
+                            public void success(SWModelList<Vehicle> vehicleSWModelList, Response response) {
+
+                                for (Vehicle v : vehicleSWModelList.results) {
+                                    vehicleArrayList.add(v);
+                                }
+
+                                //save arraylist to sharedPreferences
+                                SharedPreferences sharedPreferences = getSharedPreferences("sp", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                                if(vehicleArrayList.size() > numVehicles){
+                                    numVehicles = vehicleArrayList.size();
+                                    editor.putInt("numVehicles", numVehicles);
+                                }
+
+                                vehicleArrayList = sortVehicleArrayList(vehicleArrayList);
+                                m_vehiclesAdapter.notifyDataSetChanged();
+
+                                Gson gson = new Gson();
+                                String json = gson.toJson(vehicleArrayList);
+                                editor.putString("vehicle_array_list" + iFinal, json);
+                                editor.commit();
+
+                                progress.dismiss();
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                            }
+                        });
+
+                    }else{
+
+                        Gson gson = new Gson();
+                        String json = spVehicles.getString("vehicle_array_list" + i, null);
+                        Type type = new TypeToken<ArrayList<Vehicle>>(){}.getType();
+
+                        ArrayList<Vehicle> vehicleArrayList2 = gson.fromJson(json, type);
+                        progress.dismiss();
+
+                        if(vehicleArrayList2.size() == spVehicles.getInt("numVehicles", numVehicles)) {
+                            for (Vehicle v : vehicleArrayList2) {
                                 vehicleArrayList.add(v);
                             }
-                            progress.dismiss();
                             m_vehiclesAdapter.notifyDataSetChanged();
                         }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-                        }
-                    });
+                    }
                 }
                 break;
 
             case MainActivity.SPECIES:
+
                 title.setText(category);
                 m_vwSpeciesLayout = (ListView)findViewById(R.id.ItemListViewGroup);
                 m_vwSpeciesLayout.setAdapter(m_speciesAdapter);
@@ -395,23 +543,64 @@ public class ListActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+
                 progress = ProgressDialog.show(this, "Loading", "Loading", true);
+
                 for(int i = 1; i < 5; i++) {
-                    api.getAllSpecies(i, new Callback<SWModelList<Species>>() {
-                        @Override
-                        public void success(SWModelList<Species> speciesSWModelList, Response response) {
-                            System.out.println("Count:" + speciesSWModelList.count);
-                            for (Species s : speciesSWModelList.results) {
+
+                    //check if should save or get arraylist
+                    SharedPreferences spSpecies = getSharedPreferences("sp", MODE_PRIVATE);
+
+                    if(!spSpecies.contains("species_array_list" + i)) {
+
+                        final int iFinal = i;
+                        api.getAllSpecies(i, new Callback<SWModelList<Species>>() {
+                            @Override
+                            public void success(SWModelList<Species> speciesSWModelList, Response response) {
+
+                                for (Species s : speciesSWModelList.results) {
+                                    speciesArrayList.add(s);
+                                }
+                                //save arraylist to sharedPreferences
+                                SharedPreferences sharedPreferences = getSharedPreferences("sp", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                                if(speciesArrayList.size() > numSpecies){
+                                    numSpecies = speciesArrayList.size();
+                                    editor.putInt("numSpecies", numSpecies);
+                                }
+
+                                speciesArrayList = sortSpeciesArrayList(speciesArrayList);
+                                m_speciesAdapter.notifyDataSetChanged();
+
+                                Gson gson = new Gson();
+                                String json = gson.toJson(speciesArrayList);
+                                editor.putString("species_array_list" + iFinal, json);
+                                editor.commit();
+
+                                progress.dismiss();
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                            }
+                        });
+                    }else {
+
+                        Gson gson = new Gson();
+                        String json = spSpecies.getString("species_array_list" + i, null);
+                        Type type = new TypeToken<ArrayList<Species>>() {}.getType();
+
+                        ArrayList<Species> speciesArrayList2 = gson.fromJson(json, type);
+                        progress.dismiss();
+
+                        if (speciesArrayList2.size() == spSpecies.getInt("numSpecies", numSpecies)) {
+                            for (Species s : speciesArrayList2) {
                                 speciesArrayList.add(s);
                             }
-                            progress.dismiss();
                             m_speciesAdapter.notifyDataSetChanged();
                         }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-                        }
-                    });
+                    }
                 }
                 break;
             default:
@@ -420,7 +609,67 @@ public class ListActivity extends AppCompatActivity {
     }
 
 
-    private ArrayList<People> sortArrayList(ArrayList<People> arrayList){
+    private ArrayList<People> sortPeopleArrayList(ArrayList<People> arrayList){
+
+        for(int i = 0; i < arrayList.size(); i++){
+            for(int j = 0; j < arrayList.size(); j++){
+                if(arrayList.get(i).name.compareTo(arrayList.get(j).name) < 0){
+                    Collections.swap(arrayList, i, j);
+                }
+            }
+        }
+        return arrayList;
+    }
+
+    private ArrayList<Planet> sortPlanetArrayList(ArrayList<Planet> arrayList){
+
+        for(int i = 0; i < arrayList.size(); i++){
+            for(int j = 0; j < arrayList.size(); j++){
+                if(arrayList.get(i).name.compareTo(arrayList.get(j).name) < 0){
+                    Collections.swap(arrayList, i, j);
+                }
+            }
+        }
+        return arrayList;
+    }
+
+    private ArrayList<Film> sortFilmArrayList(ArrayList<Film> arrayList){
+
+        for(int i = 0; i < arrayList.size(); i++){
+            for(int j = 0; j < arrayList.size(); j++){
+                if(arrayList.get(i).episodeId < arrayList.get(j).episodeId){
+                    Collections.swap(arrayList, i, j);
+                }
+            }
+        }
+        return arrayList;
+    }
+
+    private ArrayList<Starship> sortStarshipArrayList(ArrayList<Starship> arrayList){
+
+        for(int i = 0; i < arrayList.size(); i++){
+            for(int j = 0; j < arrayList.size(); j++){
+                if(arrayList.get(i).name.compareTo(arrayList.get(j).name) < 0){
+                    Collections.swap(arrayList, i, j);
+                }
+            }
+        }
+        return arrayList;
+    }
+
+    private ArrayList<Vehicle> sortVehicleArrayList(ArrayList<Vehicle> arrayList){
+
+        for(int i = 0; i < arrayList.size(); i++){
+            for(int j = 0; j < arrayList.size(); j++){
+                if(arrayList.get(i).name.compareTo(arrayList.get(j).name) < 0){
+                    Collections.swap(arrayList, i, j);
+                }
+            }
+        }
+        return arrayList;
+    }
+
+    private ArrayList<Species> sortSpeciesArrayList(ArrayList<Species> arrayList){
 
         for(int i = 0; i < arrayList.size(); i++){
             for(int j = 0; j < arrayList.size(); j++){

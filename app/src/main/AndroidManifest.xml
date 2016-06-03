@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.android.starwarsv2">
+    package="com.samrezaie.android.starwarsv2">
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         tools:replace="android:icon">
-        <activity android:name=".MainActivity"
+        <activity android:name="com.samrezaie.android.starwarsv2.MainActivity"
             android:label="Star Wars Database"
             android:screenOrientation="locked">
             <intent-filter>
@@ -19,9 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListActivity"
+        <activity android:name="com.samrezaie.android.starwarsv2.ListActivity"
             android:screenOrientation="locked"></activity>
-        <activity android:name=".IndividualActivity"
+        <activity android:name="com.samrezaie.android.starwarsv2.IndividualActivity"
             android:screenOrientation="locked"></activity>
     </application>
 

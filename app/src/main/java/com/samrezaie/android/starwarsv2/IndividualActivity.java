@@ -1,4 +1,4 @@
-package com.example.android.starwarsv2;
+package com.samrezaie.android.starwarsv2;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -11,12 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.swapi.models.People;
-
-import org.w3c.dom.Text;
-
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class IndividualActivity extends AppCompatActivity{
